@@ -1,4 +1,4 @@
-import App from './App';
+import {App} from './App';
 import routes from './routes';
 import mercurius from 'mercurius';
 import {graphqlResolvers} from './graphql/graphqlResolvers';
@@ -8,7 +8,7 @@ import {graphqlLoaders} from './graphql/graphqlLoaders';
 import path from 'path';
 import webhooksApi from './clubApps/WebhookEndpointApp/api/webhooksApi';
 
-export default function (app: App) {
+export function router(app: App) {
   const env = app.Env;
 
   // Require the framework and instantiate it

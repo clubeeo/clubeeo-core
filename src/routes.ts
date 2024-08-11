@@ -1,4 +1,4 @@
-import App from './App';
+import {App} from './App';
 
 import clubRoutes from './api/clubRoutes';
 import postRoutes from './api/postRoutes';

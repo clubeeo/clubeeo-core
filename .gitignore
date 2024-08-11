@@ -14,7 +14,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-build/
+dist/
 ngrok
 ngrok-stable-linux-amd64.zip
 

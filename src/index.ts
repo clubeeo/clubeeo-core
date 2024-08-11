@@ -1,10 +1,4 @@
-import App from "./App";
-import { AppEnv } from "./appEnv";
-import { Engines } from "./Engines";
-import router from "./router";
-
-export const
-  ClubeeoApp = App,
-  ClubeeoEnv = AppEnv,
-  ClubeeoEngines = Engines,
-  clubeeoRouter = router;
+export * from './App';
+export * from './appEnv';
+export * from './Engines';
+export * from './router';

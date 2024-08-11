@@ -3,7 +3,7 @@ import {AccessEngine} from './engines/AccessEngine/AccessEngine'
 import {RoleEngine} from './engines/RoleEngine/RoleEngine'
 import MotionEngine from './engines/MotionEngine/MotionEngine';
 import {ContainerBase} from './core/lib/ContainerBase'
-import App from './App'
+import {App} from './App'
 import AppsEngine from './engines/AppsEngine/AppsEngine'
 import TranslationEngine from './engines/TranslationEngine/TranslationEngine';
 import { ITranslationEngine } from './engines/TranslationEngine/TranslationTypes';

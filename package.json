@@ -1,8 +1,10 @@
 {
   "name": "clubeeo-core",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "description": "",
-  "main": "src/index.ts",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "typings": "dist/types/index.d.ts",
   "scripts": {
     "web": "ts-node src/web.ts",
     "build": "tsc",

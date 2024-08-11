@@ -1,4 +1,4 @@
-import App from './App';
+import {App} from './App';
 import {WalletNft} from './models/WalletNft';
 import {MoreThan} from 'typeorm';
 import {timeout} from './api/auth/authRoutes';

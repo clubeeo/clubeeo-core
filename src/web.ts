@@ -1,8 +1,8 @@
 import "reflect-metadata";
 
 import {AppEnv} from "./appEnv";
-import App from './App';
-import router from './router';
+import {App} from './App';
+import {router} from './router';
 
 process.env.TZ = 'UTC';
 

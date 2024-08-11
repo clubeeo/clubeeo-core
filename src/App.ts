@@ -37,7 +37,7 @@ import UserExt from './models/UserExt';
  * * Exact implementation named as class (e.g. SyncTemplateMailerService)
  * * Interface named in snake case without "Service" suffix  (e.g. templateMailer)
  */
-export default class App extends CoreApp<User, UserExt> {
+export class App extends CoreApp<User, UserExt> {
   readonly tokenEvents: Emitter<TokenEvents>;
   readonly clubUserEvents: Emitter<ClubUserEvents>;
   readonly postEvents: Emitter<TPostEvents>;
@@ -135,3 +135,5 @@ export default class App extends CoreApp<User, UserExt> {
   }
 
 }
+
+export default App;

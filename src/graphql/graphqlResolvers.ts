@@ -10,7 +10,7 @@ import assert from 'assert'
 import {UserInClubRolesSync} from '../contexts/UserInClubContext/UserInClubRolesSync'
 import UserExt from '../models/UserExt'
 import ClubExt from '../models/ClubExt'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 import mercurius from 'mercurius'
 import ErrorWithProps = mercurius.ErrorWithProps
 import {StatusCodes} from 'http-status-codes'
@@ -223,7 +223,7 @@ export const graphqlResolvers = (app: App) => ({
   },
   UserExt: {
     getAccount: async (userExt: UserExt, args, {client, reply}) => {
-      if (userExt.service === ExtService.tg) {
+      if (userExt.service === ExtServicesEnum.tg) {
         const name = userExt.data['from']?.['username'] || '';
         return {
           link: name ? `https://t.me/${name}` : '',

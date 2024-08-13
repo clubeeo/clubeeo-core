@@ -5,8 +5,9 @@ import ClubApp from './models/ClubApp';
 import ClubAppProp from './models/ClubAppProp';
 import ClubAppRole from './models/ClubAppRole';
 import ClubAppRepo from './repos/ClubAppRepo'
+import { EngineBase } from '../../core/lib/EngineBase';
 
-export default class AppsEngine {
+export default class AppsEngine extends EngineBase {
   readonly type = 'engine';
   readonly app: App;
   readonly repos: {
@@ -14,6 +15,8 @@ export default class AppsEngine {
   }
 
   constructor(app: App) {
+    super();
+
     this.app = app;
     this.repos = {
       clubApp: new ClubAppRepo(app),

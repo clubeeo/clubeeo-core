@@ -1,7 +1,7 @@
 import App from '../../App'
 import Task, {TaskState} from '../../models/Task'
 import UserExt from '../../models/UserExt'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import * as tt from 'telegraf/src/telegram-types'
 import {ITaskResult} from './TaskProcessDaemonLogic'
 import ClubBadge from '../../models/ClubBadge'
@@ -19,7 +19,7 @@ export const taskProcessors = (app: App) => {
         if (task.userId) {
           const userExt = await app.m.findOneBy(UserExt, {
             user: {id: task.userId},
-            service: ExtService.tg,
+            service: ExtServicesEnum.tg,
           });
           if (!userExt) return { state: TaskState.failed, error: 'user telegram account is not found' };
 

@@ -2,7 +2,7 @@ import {BaseService} from './BaseService'
 import User from '../models/User'
 import UserExt from '../models/UserExt'
 import {UserExtMessage} from '../models/UserExtMessage'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 
 export interface ISendToUserOpts {
   onSend?: (userExt: UserExt) => void
@@ -21,7 +21,7 @@ export class UserSenderService extends BaseService {
   async sendToUserExt(userExt: UserExt, message: string, opts?: ISendToUserOpts) {
     if (userExt.enabled === false) return;
 
-    if (userExt.service === ExtService.tg) {
+    if (userExt.service === ExtServicesEnum.tg) {
       try {
         const userMessage = this.app.m.create(UserExtMessage, {
           userExt: {id: userExt.id},

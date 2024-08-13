@@ -3,10 +3,10 @@ import {WalletNft} from '../WalletNft'
 import Wallet from '../Wallet'
 import User from '../User'
 import UserExt from '../UserExt'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 
 export default class UserExtRepo extends BaseService {
-  async findOneByWalletNft(walletNft: WalletNft, service: ExtService) {
+  async findOneByWalletNft(walletNft: WalletNft, service: ExtServicesEnum) {
     const m = this.app.m;
 
     const wallet = walletNft.wallet || await m.findOneBy(Wallet, {

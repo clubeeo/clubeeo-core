@@ -9,7 +9,7 @@ import ExtCode, {ExtCodeTypes} from '../../models/ExtCode'
 import {TelegramContainer} from './TelegramContainer'
 import {Message} from 'typegram/message'
 import {extActivationLogic} from '../../logic/ExtActivationLogic'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import {TelegramEventCodes} from './lib/telegramConsts'
 import Club from '../../models/Club'
 import {botMemberEvents} from './events/botMemberEvents'
@@ -97,7 +97,7 @@ export class TelegramBotUpdatesFactory {
 
         isUserAllowed: async (tgChatId: number, tgUserId: number) => {
           try {
-            const user = await app.repos.user.findUserByExtId(ExtService.tg, tgUserId);
+            const user = await app.repos.user.findUserByExtId(ExtServicesEnum.tg, tgUserId);
             if (!user) {
               await app.log.warn('telegram: isUserAllowed called for unknown user', {data: {tgChatId, tgUserId}});
               return false;
@@ -107,7 +107,7 @@ export class TelegramBotUpdatesFactory {
             // if (!club) return false;
 
             const clubExt = await app.m.findOne(ClubExt, {
-              where: {service: ExtService.tg, extId: String(tgChatId)},
+              where: {service: ExtServicesEnum.tg, extId: String(tgChatId)},
               order: {id: 'DESC'},
               relations: ['club', 'clubApp'],
             });
@@ -176,7 +176,7 @@ export class TelegramBotUpdatesFactory {
         signInUser: async (data: {tgUserId: number, code: string, data: CallbackQuery}): Promise<ISignInUserResult> => {
           const extCode = await app.m.findOne(ExtCode, {
             where: {
-              service: ExtService.tg,
+              service: ExtServicesEnum.tg,
               codeType: ExtCodeTypes.login,
               code: data.code,
               used: false,
@@ -223,7 +223,7 @@ export class TelegramBotUpdatesFactory {
             // }
 
             const {userExt, user} = await fetchUserAndExtByExtId(app, {
-              service: ExtService.tg,
+              service: ExtServicesEnum.tg,
               extId: String(data.tgUserId),
               userData: data.data.from,
               sourceData: data.data,
@@ -243,7 +243,7 @@ export class TelegramBotUpdatesFactory {
               code: extCode.code,
               user: {id: user.id},
               club: {id: extCode.clubId},
-              service: ExtService.tg,
+              service: ExtServicesEnum.tg,
               codeType: ExtCodeTypes.loginConfirmed,
               used: false,
             });
@@ -272,7 +272,7 @@ export class TelegramBotUpdatesFactory {
 
         switchUserClub: async (data: { clubSlug: string, tgUserId: number, tgChatId: number }): Promise<Club> => {
           const club = await app.repos.club.findBySlug(data.clubSlug);
-          const user = await app.repos.user.findUserByExtId(ExtService.tg, data.tgUserId);
+          const user = await app.repos.user.findUserByExtId(ExtServicesEnum.tg, data.tgUserId);
 
           if (club && user) {
             const userCtx = await app.contexts.user(user);
@@ -290,7 +290,7 @@ export class TelegramBotUpdatesFactory {
           const chatId = message.chat.id;
 
           return await extActivationLogic(
-            code, ExtService.tg, String(chatId),
+            code, ExtServicesEnum.tg, String(chatId),
             {
               repos: app.repos,
               async onActivated(extCode, data) {

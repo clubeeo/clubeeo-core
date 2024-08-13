@@ -1,7 +1,7 @@
 import App from '../../App'
 import Post from '../../models/Post'
 import ClubExt from '../../models/ClubExt'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import Posted from '../../models/Posted'
 import ClubApp from '../../engines/AppsEngine/models/ClubApp'
 
@@ -21,7 +21,7 @@ export default class PostingApp {
     const clubExt = await this.app.m.findOneBy(ClubExt, {
       id: clubExtId,
       club: {id: clubId},
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
     });
 
     if (!clubExt) {
@@ -29,7 +29,7 @@ export default class PostingApp {
         data: {
           id: clubExtId,
           club: {id: clubId},
-          service: ExtService.tg,
+          service: ExtServicesEnum.tg,
         },
       })
       return

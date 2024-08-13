@@ -61,11 +61,11 @@ export default function (app: App) {
   return function (router, opts, next) {
 
     // register all engines with api
-    for (const engineName of app.engines.enginesList) {
+    for (const engineName of app.engines.enabledEngines) {
       const engine = app.engines[engineName];
 
       if ('api' in engine) {
-        app.logger.info({engineName}, 'Registering engine');
+        app.logger.info({engineName}, 'Registering engine API');
         router.register(engine.api, engine.apiConfig);
       }
     }

@@ -13,7 +13,7 @@
       "sourceMap": true,
       "esModuleInterop": true,
       "declaration": true,  // Generate .d.ts files for type declarations
-      "declarationDir": "./dist/types",
+      "declarationDir": "./dist"
    },
    "exclude": ["tests", "node_modules", "dist", "tmp"]
 }

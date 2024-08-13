@@ -1,5 +1,5 @@
 import {IClubExtRepo_FindOrCreate, IExtCodeRepo_FindActivation, IExtCodeRepo_MarkUsed} from '../interfaces/repos'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 import ExtCode from '../models/ExtCode'
 
 /**
@@ -11,7 +11,7 @@ import ExtCode from '../models/ExtCode'
  * @param ports
  * @param debugData
  */
-export const extActivationLogic = async (code: string, service: ExtService, extId: string, ports: {
+export const extActivationLogic = async (code: string, service: ExtServicesEnum, extId: string, ports: {
   repos: {
     clubExt: IClubExtRepo_FindOrCreate,
     extCode: IExtCodeRepo_MarkUsed & IExtCodeRepo_FindActivation,

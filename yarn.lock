@@ -643,6 +643,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/sanitize-html@^2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@types/sanitize-html/-/sanitize-html-2.11.0.tgz#582d8c72215c0228e3af2be136e40e0b531addf2"
+  integrity sha512-7oxPGNQHXLHE48r/r/qjn7q0hlrs3kL7oZnGj0Wf/h9tj/6ibFyRkNbsDxaBBZ4XUZ0Dx5LGCyDJ04ytSofacQ==
+  dependencies:
+    htmlparser2 "^8.0.0"
+
 "@types/secp256k1@^4.0.1":
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/@types/secp256k1/-/secp256k1-4.0.3.tgz#1b8e55d8e00f08ee7220b4d59a6abe89c37a901c"
@@ -1877,40 +1884,40 @@ discontinuous-range@1.0.0:
   resolved "https://registry.yarnpkg.com/discontinuous-range/-/discontinuous-range-1.0.0.tgz#e38331f0844bba49b9a9cb71c771585aab1bc65a"
   integrity sha512-c68LpLbO+7kP/b1Hr1qs8/BJ09F5khZGTxqxZuhzxpmwJKOgRFHJWIb9/KmqnqHhLdO55aOxFH/EGBvUQbL/RQ==
 
-dom-serializer@^1.0.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-1.4.1.tgz#de5d41b1aea290215dc45a6dae8adcf1d32e2d30"
-  integrity sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==
+dom-serializer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-2.0.0.tgz#e41b802e1eedf9f6cae183ce5e622d789d7d8e53"
+  integrity sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==
   dependencies:
-    domelementtype "^2.0.1"
-    domhandler "^4.2.0"
-    entities "^2.0.0"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.2"
+    entities "^4.2.0"
 
 dom-walk@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.2.tgz#0c548bef048f4d1f2a97249002236060daa3fd84"
   integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
 
-domelementtype@^2.0.1, domelementtype@^2.2.0:
+domelementtype@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.3.0.tgz#5c45e8e869952626331d7aab326d01daf65d589d"
   integrity sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==
 
-domhandler@^4.0.0, domhandler@^4.2.0:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-4.3.1.tgz#8d792033416f59d68bc03a5aa7b018c1ca89279c"
-  integrity sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==
+domhandler@^5.0.2, domhandler@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-5.0.3.tgz#cc385f7f751f1d1fc650c21374804254538c7d31"
+  integrity sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
   dependencies:
-    domelementtype "^2.2.0"
+    domelementtype "^2.3.0"
 
-domutils@^2.5.2:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/domutils/-/domutils-2.8.0.tgz#4437def5db6e2d1f5d6ee859bd95ca7d02048135"
-  integrity sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==
+domutils@^3.0.1:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-3.1.0.tgz#c47f551278d3dc4b0b1ab8cbb42d751a6f0d824e"
+  integrity sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==
   dependencies:
-    dom-serializer "^1.0.1"
-    domelementtype "^2.2.0"
-    domhandler "^4.2.0"
+    dom-serializer "^2.0.0"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.3"
 
 dotenv@8.2.0:
   version "8.2.0"
@@ -1989,10 +1996,10 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.4:
   dependencies:
     once "^1.4.0"
 
-entities@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
-  integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
+entities@^4.2.0, entities@^4.4.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
+  integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
 
 env-paths@^2.2.0:
   version "2.2.1"
@@ -3077,15 +3084,15 @@ hpagent@^0.1.2:
   resolved "https://registry.yarnpkg.com/hpagent/-/hpagent-0.1.2.tgz#cab39c66d4df2d4377dbd212295d878deb9bdaa9"
   integrity sha512-ePqFXHtSQWAFXYmj+JtOTHr84iNrII4/QRlAAPPE+zqnKy4xJo7Ie1Y4kC7AdB+LxLxSTTzBMASsEcy0q8YyvQ==
 
-htmlparser2@^6.0.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-6.1.0.tgz#c4d762b6c3371a05dbe65e94ae43a9f845fb8fb7"
-  integrity sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A==
+htmlparser2@^8.0.0:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-8.0.2.tgz#f002151705b383e62433b5cf466f5b716edaec21"
+  integrity sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==
   dependencies:
-    domelementtype "^2.0.1"
-    domhandler "^4.0.0"
-    domutils "^2.5.2"
-    entities "^2.0.0"
+    domelementtype "^2.3.0"
+    domhandler "^5.0.3"
+    domutils "^3.0.1"
+    entities "^4.4.0"
 
 http-cache-semantics@^4.0.0, http-cache-semantics@^4.1.0:
   version "4.1.0"
@@ -5460,14 +5467,14 @@ sandwich-stream@^2.0.2:
   resolved "https://registry.yarnpkg.com/sandwich-stream/-/sandwich-stream-2.0.2.tgz#6d1feb6cf7e9fe9fadb41513459a72c2e84000fa"
   integrity sha512-jLYV0DORrzY3xaz/S9ydJL6Iz7essZeAfnAavsJ+zsJGZ1MOnsS52yRjU3uF3pJa/lla7+wisp//fxOwOH8SKQ==
 
-sanitize-html@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-2.7.0.tgz#e106205b468aca932e2f9baf241f24660d34e279"
-  integrity sha512-jfQelabOn5voO7FAfnQF7v+jsA6z9zC/O4ec0z3E35XPEtHYJT/OdUziVWlKW4irCr2kXaQAyXTXDHWAibg1tA==
+sanitize-html@^2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-2.13.0.tgz#71aedcdb777897985a4ea1877bf4f895a1170dae"
+  integrity sha512-Xff91Z+4Mz5QiNSLdLWwjgBDm5b1RU6xBT0+12rapjiaR7SwfRdjw8f+6Rir2MXKLrDicRFHdb51hGOAxmsUIA==
   dependencies:
     deepmerge "^4.2.2"
     escape-string-regexp "^4.0.0"
-    htmlparser2 "^6.0.0"
+    htmlparser2 "^8.0.0"
     is-plain-object "^5.0.0"
     parse-srcset "^1.0.2"
     postcss "^8.3.11"

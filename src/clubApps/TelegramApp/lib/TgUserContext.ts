@@ -1,13 +1,13 @@
 import App from '../../../App'
 import UserInClubContext from '../../../contexts/UserInClubContext'
 import UserExt from '../../../models/UserExt'
-import {ExtService} from '../../../lib/enums'
+import {ExtServicesEnum} from '../../../lib/enums'
 import {Message} from 'typegram/message'
 import {fetchUserAndExtByExtId} from '../../../contexts/UserExtContext'
 
 export async function tgUserContextByMessage(app: App, message: Message) {
   const {userExt, user} = await fetchUserAndExtByExtId(app, {
-    service: ExtService.tg,
+    service: ExtServicesEnum.tg,
     extId: String(message.from.id),
     userData: message.from,
     sourceData: message,

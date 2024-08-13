@@ -9,7 +9,7 @@ import {eventNames} from '../MotionEngine/shared/eventNames'
 import {tgI} from '../../clubApps/TelegramApp/lib/tgHelpers'
 import {Telegram} from 'telegraf'
 import UserExt from '../../models/UserExt'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import Member from '../../models/Member'
 
 export type BadgeEngineEvents = {
@@ -45,7 +45,7 @@ export const badgeEngineEventsFactory = (app: App) => {
     //todo: remove
     //todo: create "informer engine", to send notifications to user and move there
     const tgExt = await app.m.findOneBy(UserExt, {
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       user: {id: user.id},
       enabled: true,
     });

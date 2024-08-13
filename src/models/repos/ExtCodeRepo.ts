@@ -3,7 +3,7 @@ import User from '../User'
 import ExtCode, {ExtCodeTypes} from '../ExtCode'
 import Club from '../Club'
 import {IExtCodeRepo} from '../../interfaces/repos'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 
 export default class ExtCodeRepo extends BaseService implements IExtCodeRepo {
   async fetchTgLoginCode(user: User, club: Club) {
@@ -14,7 +14,7 @@ export default class ExtCodeRepo extends BaseService implements IExtCodeRepo {
     const {value: extCode} = await this.app.em.findOneOrCreateBy(ExtCode, {
       user: user ? {id: user.id} : null,
       club: {id: club.id},
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       codeType: ExtCodeTypes.login,
       used: false,
     }, {
@@ -30,7 +30,7 @@ export default class ExtCodeRepo extends BaseService implements IExtCodeRepo {
     const extCode = await this.app.m.findOne(ExtCode, {
       where: {
         code,
-        service: ExtService.tg,
+        service: ExtServicesEnum.tg,
         codeType: ExtCodeTypes.loginConfirmed,
         used: false,
       },
@@ -52,14 +52,14 @@ export default class ExtCodeRepo extends BaseService implements IExtCodeRepo {
 
     return await m.findOneBy(ExtCode, {
       code,
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       codeType: ExtCodeTypes.activation,
       used: false,
     });
   }
 
-  async findActivation(code: string, service: ExtService): Promise<ExtCode> {
-    if (service === ExtService.tg) {
+  async findActivation(code: string, service: ExtServicesEnum): Promise<ExtCode> {
+    if (service === ExtServicesEnum.tg) {
       return await this.findTelegramActivation(code);
     }
 

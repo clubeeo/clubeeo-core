@@ -1,7 +1,7 @@
 import mitt, {Emitter} from 'mitt';
 import App from '../../../App'
 import {Chat, ChatMemberUpdated} from 'typegram/manage'
-import {ExtService} from '../../../lib/enums'
+import {ExtServicesEnum} from '../../../lib/enums'
 import {TBotMemberEvents} from './botEventsInterfaces'
 
 const userNotFoundTemplate = 'Registered user is not found';
@@ -22,7 +22,7 @@ export function botMemberEvents(app: App) {
   events.on('botPromotedToAdmin', async (data: { myChatMember: ChatMemberUpdated }) => {
     const fromId = data.myChatMember.from.id;
 
-    const user = await app.repos.user.findUserByExtId(ExtService.tg, String(data.myChatMember.from.id));
+    const user = await app.repos.user.findUserByExtId(ExtServicesEnum.tg, String(data.myChatMember.from.id));
     if (!user) {
       await Telegram.sendMessage(fromId, userNotFoundTemplate);
 
@@ -42,7 +42,7 @@ export function botMemberEvents(app: App) {
 
     const clubExt = await app.repos.clubExt.findOrCreate({
       extId: String(data.myChatMember.chat.id),
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       club: memberCtx.club,
     }, {
       debugData: {myChatMember: data.myChatMember},

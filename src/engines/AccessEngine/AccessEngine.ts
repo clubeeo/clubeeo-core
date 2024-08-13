@@ -7,13 +7,14 @@ import {IEntityId} from '../../lib/common'
 import {EntityTarget} from 'typeorm/common/EntityTarget'
 import ClubApp from '../AppsEngine/models/ClubApp'
 import Member from '../../models/Member'
-import {appRegistry} from '../AppsEngine/AppsRegistry'
+import { EngineBase } from '../../core/lib/EngineBase'
 
-export class AccessEngine {
-  readonly type = 'engine';
+export class AccessEngine extends EngineBase {
   readonly app: App;
 
   constructor(app: App) {
+    super();
+
     this.app = app;
   }
 

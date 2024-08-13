@@ -21,14 +21,16 @@ import MotionTrigger from './models/MotionTrigger'
 import {ActionBuilderLogic} from './lib/ActionBuilderLogic'
 import Member from '../../models/Member'
 import {appRegistry} from '../AppsEngine/AppsRegistry'
+import { EngineBase } from '../../core/lib/EngineBase'
 
-export default class MotionEngine implements IEngineDaemon {
-  readonly type = 'engine';
+export default class MotionEngine extends EngineBase implements IEngineDaemon {
   readonly app: App;
   readonly taskBuilder: TaskBuilderLogic;
   readonly actionBuilder: ActionBuilderLogic;
 
   constructor(app: App) {
+    super();
+
     this.app = app;
 
     this.actionBuilder = new ActionBuilderLogic({

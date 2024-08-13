@@ -4,7 +4,7 @@ import ClubAppRole from '../models/ClubAppRole'
 import {StatusCodes} from 'http-status-codes'
 import ClubRole from '../../../models/ClubRole'
 import ExtCode, {ExtCodeTypes} from '../../../models/ExtCode'
-import {ExtService} from '../../../lib/enums'
+import {ExtServicesEnum} from '../../../lib/enums'
 import {eventNames} from '../../MotionEngine/shared/eventNames'
 import clubAppRegistryRoutes from './clubAppRegistryRoutes'
 import Event from '../../../models/Event'
@@ -460,7 +460,7 @@ export default function (c: AppsEngine) {
 
           const extCode = await c.app.m.findOneBy(ExtCode, {
             code,
-            service: ExtService.typeform,
+            service: ExtServicesEnum.typeform,
             codeType: ExtCodeTypes.webhook,
           });
 

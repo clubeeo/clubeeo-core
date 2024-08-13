@@ -8,13 +8,15 @@ import {IEntityId} from '../../lib/common'
 import assert from 'assert'
 import {Emitter} from 'mitt'
 import {RoleEngineEvents, roleEngineEventsFactory} from './RoleEngineEvents'
+import { EngineBase } from '../../core/lib/EngineBase'
 
-export class RoleEngine {
-  readonly type = 'engine';
+export class RoleEngine extends EngineBase {
   readonly app: App;
   readonly events: Emitter<RoleEngineEvents>;
 
   constructor(app: App) {
+    super();
+
     this.app = app;
     this.events = roleEngineEventsFactory(app);
   }

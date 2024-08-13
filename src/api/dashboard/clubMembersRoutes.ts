@@ -1,6 +1,6 @@
 import App from '../../App';
 import {UserWrap} from '../../models/wraps/UserWrap'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import { format } from '@fast-csv/format'
 import UserInClubContext from '../../contexts/UserInClubContext'
 import moment from 'moment';
@@ -43,7 +43,7 @@ export default function (app: App) {
         csvStream.write([
           wUser.screenNameView,
           user.wallets.map(w => w.address).join(', '),
-          user.userExts.filter(uExt => uExt.service === ExtService.tg).map(w => w.data['from']?.['username']).join(', '),
+          user.userExts.filter(uExt => uExt.service === ExtServicesEnum.tg).map(w => w.data['from']?.['username']).join(', '),
           (await userInClub.getBadges()).map(b => `${b.clubBadge.title}#${b.index}`),
           moment(await userInClub.joinDate())?.format('YYYY-MM-DD hh:mm:ss'),
         ]);

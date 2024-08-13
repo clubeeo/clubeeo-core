@@ -3,7 +3,7 @@ import Club from '../models/Club'
 import ClubExt from '../models/ClubExt'
 import ClubRole from '../models/ClubRole'
 import * as querystring from 'querystring'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 import UserExt from '../models/UserExt'
 import Member from '../models/Member'
 import {ISomeUserData} from '../models/repos/UserRepo'
@@ -32,7 +32,7 @@ export class ClubContext {
 
   async telegramInviteLink() {
     const clubExt = await this.app.m.findOneBy(ClubExt, {
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       ...this.contextModelIds,
     });
 
@@ -87,7 +87,7 @@ export class ClubContext {
     return this.app.contexts.userInClub(user, this.club, {member});
   }
 
-  async fetchUserInClubByExtId(opts: {extId: string, service: ExtService, userData?: ISomeUserData}) {
+  async fetchUserInClubByExtId(opts: {extId: string, service: ExtServicesEnum, userData?: ISomeUserData}) {
     const {extId, service, userData} = opts;
 
     let userExt = await this.app.m.findOne(UserExt, {
@@ -107,7 +107,7 @@ export class ClubContext {
       });
 
       userExt = await this.app.em.createAndSave(UserExt, {
-        service: ExtService.tg,
+        service: ExtServicesEnum.tg,
         extId: extId,
         data: userData,
         user: {id: user.id},

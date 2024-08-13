@@ -1,12 +1,12 @@
 import {BaseService} from '../../services/BaseService'
 import ClubExt from '../ClubExt'
 import Club from '../Club'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import User from '../User'
 import {IEntityId} from '../../lib/common'
 
 export default class ClubRepo extends BaseService {
-  async findByExtId(extId: string, service: ExtService) {
+  async findByExtId(extId: string, service: ExtServicesEnum) {
     const clubExt = await this.app.m.findOne(ClubExt, {
       where: {
         extId,

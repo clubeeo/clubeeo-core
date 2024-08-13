@@ -2,7 +2,7 @@ import App from '../../../App';
 import {obj, str} from 'json-schema-blocks';
 import {StatusCodes} from 'http-status-codes'
 import ClubExt from '../../../models/ClubExt';
-import { ExtService } from '../../../lib/enums';
+import { ExtServicesEnum } from '../../../lib/enums';
 import { In } from 'typeorm';
 
 export default function (app: App) {
@@ -28,7 +28,7 @@ export default function (app: App) {
         where: {
           club: {id: club.id},
           clubApp: {id: clubApp.id},
-          service: In([ExtService.tgGroup, ExtService.tgChannel]),
+          service: In([ExtServicesEnum.tgGroup, ExtServicesEnum.tgChannel]),
         },
         order: {createdAt: 'ASC'},
       });
@@ -36,7 +36,7 @@ export default function (app: App) {
       const items = [];
       for (const ext of exts) {
         let item = ext;
-        if (ext.service === ExtService.tgGroup || ext.service === ExtService.tgChannel) {
+        if (ext.service === ExtServicesEnum.tgGroup || ext.service === ExtServicesEnum.tgChannel) {
           // get chat info
           if (!ext.cached?.['id']) {
             try {

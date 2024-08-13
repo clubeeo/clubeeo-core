@@ -2,12 +2,12 @@ import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere'
 import {DeepPartial} from 'typeorm/common/DeepPartial'
 import ClubExt from '../models/ClubExt'
 import ExtCode from '../models/ExtCode'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 
 export interface IClubExtRepo_FindByExtId {
   findByExtId(
     extId: string,
-    service: ExtService,
+    service: ExtServicesEnum,
     relations: {},
     where: FindOptionsWhere<ClubExt>
   ): Promise<ClubExt>
@@ -17,7 +17,7 @@ export interface IClubExtRepo_FindOrCreate {
   findOrCreate(
     where: {
       extId: string,
-      service: ExtService,
+      service: ExtServicesEnum,
       club: {id: string}
     },
     data: DeepPartial<ClubExt> | null
@@ -31,7 +31,7 @@ export interface IExtCodeRepo_MarkUsed {
 }
 
 export interface IExtCodeRepo_FindActivation {
-  findActivation(code: string, service: ExtService): Promise<ExtCode>
+  findActivation(code: string, service: ExtServicesEnum): Promise<ExtCode>
 }
 
 export type IExtCodeRepo = IExtCodeRepo_MarkUsed & IExtCodeRepo_FindActivation;

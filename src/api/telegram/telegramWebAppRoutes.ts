@@ -1,6 +1,6 @@
 import UserExt from '../../models/UserExt'
 import {StatusCodes} from 'http-status-codes'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import App from '../../App'
 import Member from '../../models/Member'
 import ClubExt from '../../models/ClubExt'
@@ -32,7 +32,7 @@ export default function (app: App) {
       const userData = tgAppInitData.userData;
 
       const {userExt, user} = await fetchUserAndExtByExtId(app, {
-        service: ExtService.tg,
+        service: ExtServicesEnum.tg,
         extId: String(userData.id),
         userData,
       });
@@ -55,7 +55,7 @@ export default function (app: App) {
 
       const clubExts = await app.m.find(ClubExt, {
         where: {
-          service: ExtService.tg,
+          service: ExtServicesEnum.tg,
           club: {id: club.id},
         }
       });

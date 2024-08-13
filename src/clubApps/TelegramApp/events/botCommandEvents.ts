@@ -1,6 +1,6 @@
 import mitt, {Emitter} from 'mitt';
 import App from '../../../App'
-import {ExtService} from '../../../lib/enums'
+import {ExtServicesEnum} from '../../../lib/enums'
 import {IMessageAndCommand, TBotCommandEvents} from './botEventsInterfaces'
 import UserExt from '../../../models/UserExt'
 import {UserExtVal} from '../../../models/UserExtVal'
@@ -23,7 +23,7 @@ export function botCommandEvents(app: App) {
     }
 
     const {userExt, user} = await fetchUserAndExtByExtId(app, {
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       extId: String(message.from.id),
       userData: message.from,
       sourceData: message,
@@ -158,7 +158,7 @@ export function botCommandEvents(app: App) {
         const [_, username] = parsedUsername;
 
         const requestedUserExt = await app.m.findOneBy(UserExt, {
-          service: ExtService.tg,
+          service: ExtServicesEnum.tg,
           username,
         });
         if (requestedUserExt) {
@@ -227,7 +227,7 @@ export function botCommandEvents(app: App) {
 
       const requestedUserExt = await app.m.findOne(UserExt, {
         where: {
-          service: ExtService.tg,
+          service: ExtServicesEnum.tg,
           username,
         },
         relations: {
@@ -281,13 +281,13 @@ export function botCommandEvents(app: App) {
     const Telegram = app.TelegramContainer.Telegram;
 
     const userExt = await app.m.findOneBy(UserExt, {
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       extId: String(message.from.id),
     });
     const userExtVal = await app.m.findOneBy(UserExtVal, {userExt: {id: userExt.id}, key: 'botState'});
 
     if (userExtVal?.value === 'set_bio') {
-      const user = await app.repos.user.findUserByExtId(ExtService.tg, userExt.extId);
+      const user = await app.repos.user.findUserByExtId(ExtServicesEnum.tg, userExt.extId);
       const memberCtx = await app.contexts.user(user).inActiveClubContext();
       const {value: member} = await memberCtx.fetchMember();
 

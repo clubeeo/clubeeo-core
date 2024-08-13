@@ -9,13 +9,15 @@ import {IEntityId} from '../../lib/common'
 import {badgeTypeFactory} from './lib/badgeTypes'
 import ClubRole from '../../models/ClubRole'
 import Member from '../../models/Member'
+import { EngineBase } from '../../core/lib/EngineBase'
 
-export class BadgeEngine {
-  readonly type = 'engine';
+export class BadgeEngine extends EngineBase{
   readonly app: App;
   readonly events: Emitter<BadgeEngineEvents>;
 
   constructor(app: App) {
+    super();
+
     this.app = app;
     this.events = badgeEngineEventsFactory(app);
   }

@@ -3,7 +3,7 @@ import UserExt from '../../models/UserExt'
 import {StatusCodes} from 'http-status-codes'
 import {EntityManager} from 'typeorm'
 import {TgAuthCheck} from '../../clubApps/TelegramApp/lib/TgAuthCheck'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import ExtCode from '../../models/ExtCode'
 import App from '../../App'
 
@@ -65,7 +65,7 @@ export default function (app: App) {
       } else {
         let userExt = await app.m.findOne(UserExt, {
           where: {
-            service: ExtService.tg,
+            service: ExtServicesEnum.tg,
             extId: String(params.id),
             enabled: true,
           },
@@ -80,7 +80,7 @@ export default function (app: App) {
           }
         } else {
           userExt = app.m.create(UserExt, {
-            service: ExtService.tg,
+            service: ExtServicesEnum.tg,
             extId: String(params.id),
             user,
             enabled: true,

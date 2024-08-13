@@ -90,3 +90,5 @@ export default class ExtendedEntityManager {
     return value;
   }
 }
+
+export { ExtendedEntityManager };

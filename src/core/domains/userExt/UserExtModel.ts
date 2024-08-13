@@ -5,7 +5,7 @@ import {
 } from 'typeorm'
 import UserModel from '../../domains/user/UserModel'
 import {Index} from 'typeorm/index'
-import {ExtService} from '../../lib/enums'
+import {TExtServices} from '../../lib/enums'
 import ModelBase from '../../models/ModelBase'
 
 export default abstract class UserExtModel<TUser extends UserModel> extends ModelBase {
@@ -21,7 +21,7 @@ export default abstract class UserExtModel<TUser extends UserModel> extends Mode
 
   @Column({type: String})
   @Index()
-  service: ExtService;
+  service: TExtServices;
 
   @Column({type: String})
   @Index()

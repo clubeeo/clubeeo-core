@@ -5,7 +5,7 @@ import Wallet from '../models/Wallet'
 import {EvmChainsEnum, NearChainsEnum} from '../lib/TChains'
 import {In} from 'typeorm'
 import Club from '../models/Club'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 import Member from '../models/Member'
 
 export class UserContext {
@@ -31,7 +31,7 @@ export class UserContext {
     if (!this.user) return false;
 
     const userExtCount = await this.app.m.countBy(UserExt, {
-      service: ExtService.tg,
+      service: ExtServicesEnum.tg,
       user: {id: this.user.id},
       enabled: true,
     });

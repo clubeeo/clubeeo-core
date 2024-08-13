@@ -8,7 +8,7 @@ import {
 } from 'typeorm'
 import {Index} from 'typeorm/index'
 import Club from './Club'
-import {ExtService} from '../lib/enums'
+import {TExtServices} from '../lib/enums'
 import ClubApp from '../engines/AppsEngine/models/ClubApp'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon'
 
@@ -30,7 +30,7 @@ export default class ClubExt {
 
   @Column({type: String})
   @Index()
-  service: ExtService;
+  service: TExtServices;
 
   @Column({type: String})
   @Index()

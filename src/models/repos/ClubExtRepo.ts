@@ -3,10 +3,10 @@ import ClubExt from '../ClubExt'
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere'
 import {DeepPartial} from 'typeorm/common/DeepPartial'
 import {IClubExtRepo} from '../../interfaces/repos'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 
 export default class ClubExtRepo extends BaseService implements IClubExtRepo {
-  async findByExtId(extId: string, service: ExtService, relations: {}, where: FindOptionsWhere<ClubExt> = {}) {
+  async findByExtId(extId: string, service: ExtServicesEnum, relations: {}, where: FindOptionsWhere<ClubExt> = {}) {
     const clubExt = await this.app.m.findOne(ClubExt, {
       where: {
         ...where,
@@ -22,7 +22,7 @@ export default class ClubExtRepo extends BaseService implements IClubExtRepo {
   async findOrCreate(
     where: {
       extId: string,
-      service: ExtService,
+      service: ExtServicesEnum,
       club: {id: string}
     },
     data: DeepPartial<ClubExt> = {}

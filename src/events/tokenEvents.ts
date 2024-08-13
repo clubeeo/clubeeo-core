@@ -3,7 +3,7 @@ import App from '../App'
 import ClubRoleToken from '../models/ClubRoleToken'
 import ClubExt from '../models/ClubExt'
 import {WalletNft} from '../models/WalletNft'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 
 export type TokenEvents = {
   tokenAmountChanged: {},
@@ -36,7 +36,7 @@ export function tokenEventsFactory(app: App): Emitter<TokenEvents> {
   // handle telegram: ban user if token is sold
   tokenEvents.on('tokenIsSold', async (data) => {
     try {
-      const tgUserExt = await app.repos.userExt.findOneByWalletNft(data.walletNft, ExtService.tg);
+      const tgUserExt = await app.repos.userExt.findOneByWalletNft(data.walletNft, ExtServicesEnum.tg);
       const tgUserId = tgUserExt.extId;
 
       const clubRoleTokens = await app.m.find(ClubRoleToken, {

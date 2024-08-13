@@ -1,10 +1,13 @@
 import App from '../App'
-import {ExtService} from '../lib/enums'
+import {TExtServices} from '../lib/enums'
 import {ISomeUserData} from '../models/repos/UserRepo'
 import UserExt from '../models/UserExt'
 import User from '../models/User'
 
-export const fetchUserAndExtByExtId = async (app: App, opts: {extId: string, service: ExtService, userData?: ISomeUserData, sourceData?: any}) => {
+/** 
+ * @deprecated - soon to be moved proper engine
+ */ 
+export const fetchUserAndExtByExtId = async (app: App, opts: {extId: string, service: TExtServices, userData?: ISomeUserData, sourceData?: any}) => {
   const {extId, service, userData} = opts;
 
   const {value: userExt, isCreated} = await app.em.createOrLazyUpdateBy(UserExt, {

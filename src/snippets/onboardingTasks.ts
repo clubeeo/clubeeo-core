@@ -2,7 +2,7 @@ import App from '../App'
 import Club from '../models/Club'
 import User from '../models/User'
 import UserExt from '../models/UserExt'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 import ClubExt from '../models/ClubExt'
 import ExtCode, {ExtCodeTypes} from '../models/ExtCode'
 import Member from '../models/Member'
@@ -39,7 +39,7 @@ export async function onboardingTasks(app: App, taskId: string, club: Club, user
   const stepsConfig = club.settings['steps'] || [];
 
   const tgUserExt = user ? await app.m.findOneBy(UserExt, {
-    service: ExtService.tg,
+    service: ExtServicesEnum.tg,
     user: {id: user.id},
     enabled: true,
   }) : null;
@@ -78,7 +78,7 @@ export async function onboardingTasks(app: App, taskId: string, club: Club, user
 
       const tgClubExt = await app.m.findOneBy(ClubExt, {
         id: stepConfig.clubExtId,
-        service: ExtService.tg,
+        service: ExtServicesEnum.tg,
         club: {id: club.id},
       });
 
@@ -117,7 +117,7 @@ export async function onboardingTasks(app: App, taskId: string, club: Club, user
       const clubExt = await app.m.findOne(ClubExt, {
         where: {
           id: stepConfig.clubExtId,
-          service: ExtService.typeform,
+          service: ExtServicesEnum.typeform,
           club: {id: club.id},
         },
       });
@@ -135,7 +135,7 @@ export async function onboardingTasks(app: App, taskId: string, club: Club, user
         club: {id: club.id},
         clubExt: {id: clubExt.id},
         user: {id: user.id},
-        service: ExtService.typeform,
+        service: ExtServicesEnum.typeform,
         codeType: ExtCodeTypes.webhook,
       }, { //todo: callable
         code: app.nanoid(),

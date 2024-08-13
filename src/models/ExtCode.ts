@@ -10,7 +10,7 @@ import {Index} from 'typeorm/index'
 import User from './User'
 import Club from './Club'
 import ClubExt from './ClubExt'
-import {ExtService} from '../lib/enums'
+import {ExtServicesEnum} from '../lib/enums'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon';
 
 export enum ExtCodeTypes {
@@ -44,7 +44,7 @@ export default class ExtCode {
 
   @Column({type: String})
   @Index()
-  service: ExtService;
+  service: ExtServicesEnum;
 
   @Column({type: String})
   @Index()

@@ -1,6 +1,6 @@
 import UserExt from '../../models/UserExt';
 import User from '../../models/User'
-import {ExtService} from '../../lib/enums'
+import {ExtServicesEnum} from '../../lib/enums'
 import Club from '../../models/Club'
 import {IEntityId} from '../../lib/common'
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere'
@@ -26,7 +26,7 @@ export default class UserRepo extends UserRepoBase<User> {
     return await this.findById(entity.userId);
   }
 
-  async findUserByExtId(service: ExtService, extId: string | number) {
+  async findUserByExtId(service: ExtServicesEnum, extId: string | number) {
     const userExt = await this.app.m.findOne(UserExt, {
       where: {service, extId: String(extId), enabled: true},
       order: {id: 'DESC'},

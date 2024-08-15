@@ -8,38 +8,36 @@ import {EntityTarget} from 'typeorm/common/EntityTarget'
 import ClubApp from '../AppsEngine/models/ClubApp'
 import Member from '../../models/Member'
 import { EngineBase } from '../../core/lib/EngineBase'
+import { AccessService } from './AccessService'
 
 export class AccessEngine extends EngineBase {
   readonly app: App;
+  readonly service: AccessService<App>;
 
-  constructor(app: App) {
+  constructor(c: App) {
     super();
 
-    this.app = app;
+    this.app = c;
+    this.service = new AccessService(c);
   }
 
   //todo: implement member-based methods
 
-  async memberHasRole(member: Member | IEntityId, club: Club| IEntityId, roleSlug: string) {
-    if (!member || !club) return false;
-
-    const memberRole = await this.app.m.findOneBy(MemberRole, {
-      member: {id: member.id},
-      club: {id: club.id},
-      clubRole: {
-        club: {id: club.id},
-        name: roleSlug,
-      },
-      enabled: true,
-    });
-
-    return !!memberRole;
+  /**
+   * 
+   * @deprecated use .service
+   */
+  async memberHasRole(member: Member, club: Club| IEntityId, roleSlug: string) {
+    return this.service.hasRole(member, club, roleSlug);
   }
 
-  async isMemberAdmin(member: Member | IEntityId, club: Club| IEntityId) {
+  async isMemberAdmin(member: Member, club: Club| IEntityId) {
     return this.memberHasRole(member, club, 'admin');
   }
 
+  /**
+   * @deprecated use method in AppsEngine
+   */
   async memberHasAccessToAppObject(
     member: Member,
     clubApp: ClubApp,
@@ -76,6 +74,9 @@ export class AccessEngine extends EngineBase {
     }) > 0;
   }
 
+  /**
+   * @deprecated use method in AppsEngine
+   */
   async memberHasAccessToAppPage(
     member: Member,
     clubApp: ClubApp,
@@ -85,6 +86,9 @@ export class AccessEngine extends EngineBase {
     return await this.memberHasAccessToAppObject(member, clubApp, accessTo);
   }
 
+  /**
+   * @deprecated use method in AppsEngine
+   */
   async memberHasAccessToAppAction(
     member: Member,
     clubApp: ClubApp,

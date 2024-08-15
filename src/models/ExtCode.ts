@@ -2,7 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity, ManyToOne,
-   RelationId,
+  RelationId,
   UpdateDateColumn,
 } from 'typeorm'
 
@@ -10,7 +10,7 @@ import {Index} from 'typeorm/index'
 import User from './User'
 import Club from './Club'
 import ClubExt from './ClubExt'
-import {ExtServicesEnum} from '../lib/enums'
+import {TExtServices} from '../lib/enums'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon';
 
 export enum ExtCodeTypes {
@@ -20,6 +20,8 @@ export enum ExtCodeTypes {
   webhook = 'webhook',
   activation = 'activation',
 }
+
+type TExtCodeTypes = keyof typeof ExtCodeTypes;
 
 @Entity()
 export default class ExtCode {
@@ -44,11 +46,11 @@ export default class ExtCode {
 
   @Column({type: String})
   @Index()
-  service: ExtServicesEnum;
+  service: TExtServices | string;
 
   @Column({type: String})
   @Index()
-  codeType: ExtCodeTypes;
+  codeType: TExtCodeTypes | string;
 
   @Column({type: String, nullable: true})
   @Index()

@@ -78,6 +78,17 @@ export default class ExtendedEntityManager {
     }
   }
 
+  async updateIfExistBy<Entity>(entityClass: ObjectType<Entity>, where: FindOptionsWhere<Entity>, plainObject: DeepPartial<Entity>) {
+    const value = await this.m.findOneBy(entityClass, where)
+    if (value) {
+      this.m.merge(entityClass, value, plainObject);
+      await this.m.save(value);
+      return value;
+    } else {
+      return null;
+    }
+  }
+
   async createOrUpdateBy<Entity>(entityClass: ObjectType<Entity>, where: FindOptionsWhere<Entity>, plainObject: DeepPartial<Entity>) {
     const value = await this.initOrMergeBy(entityClass, where, plainObject)
     await this.m.save(value);

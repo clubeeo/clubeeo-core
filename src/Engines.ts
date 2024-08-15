@@ -19,10 +19,31 @@ export class Engines extends EnginesContainerBase {
   }
 
   get apps() { return this.once('apps', () => new AppsEngine(this.app)) }
-  get accessEngine() { return this.once('accessEngine', () => new AccessEngine(this.app)) }
-  get badgeEngine() { return this.once('badgeEngine', () => new BadgeEngine(this.app)) }
-  get motionEngine() { return this.once('motionEngine', () => new MotionEngine(this.app)) }
-  get roleEngine() { return this.once('roleEngine', () => new RoleEngine(this.app)) }
+
+  get access() { return this.once('access', () => new AccessEngine(this.app)) }
+  /**
+   * @deprecated Use `access` instead.
+   */
+  get accessEngine() { return this.access }
+
+  get badge() { return this.once('badge', () => new BadgeEngine(this.app)) }
+  /**
+   * @deprecated Use `badge` instead.
+   */
+  get badgeEngine() { return this.badge }
+
+  get motion() { return this.once('motion', () => new MotionEngine(this.app)) }
+  /**
+   * @deprecated Use `motion` instead.
+   */
+  get motionEngine() { return this.motion }
+
+  get role() { return this.once('role', () => new RoleEngine(this.app)) }
+  /**
+   * @deprecated Use `role` instead.
+   */
+  get roleEngine() { return this.role }
+
   get translation(): ITranslationEngine { return this.once('translation', () => new TranslationEngine(this.app)) }
 
 }

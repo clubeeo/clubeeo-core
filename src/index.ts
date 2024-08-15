@@ -4,6 +4,10 @@ export * from './Engines';
 export * from './router';
 export * from './AppSettings';
 
+// interfaces
+
+export * from './core/exeInterfaces';
+
 // lib
 export {ContainerBase} from './core/lib/ContainerBase';
 export * from './core/lib/EngineBase';

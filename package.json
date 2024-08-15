@@ -1,6 +1,6 @@
 {
   "name": "clubeeo-core",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "",
   "type": "commonjs",
   "main": "dist/index.js",
@@ -27,6 +27,7 @@
   "author": "Roman Exemplarov",
   "files": [
     "dist",
+    "src",
     "tsconfig.json",
     "readme.md"
   ],

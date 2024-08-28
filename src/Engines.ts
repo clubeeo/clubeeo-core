@@ -6,44 +6,49 @@ import {EnginesContainerBase} from './core/lib/EngineBase'
 import {App} from './App'
 import AppsEngine from './engines/AppsEngine/AppsEngine'
 import TranslationEngine from './engines/TranslationEngine/TranslationEngine';
-import { ITranslationEngine } from './engines/TranslationEngine/TranslationTypes';
 
-export class Engines extends EnginesContainerBase {
+export class Engines extends EnginesContainerBase<App> {
   protected app: App;
 
   constructor(app: App) {
-    super();
+    super(app);
     this.app = app;
 
-    this.enableEngines('apps', 'accessEngine', 'badgeEngine', 'motionEngine', 'roleEngine', 'translation');
+    return this
   }
 
-  get apps() { return this.once('apps', () => new AppsEngine(this.app)) }
+  static buildDefault(app: App) {
+    return new Engines(app)
+      .mount('apps', AppsEngine)
+      .mount('access', AccessEngine)
+      .mount('badge', BadgeEngine)
+      .mount('motion', MotionEngine)
+      .mount('role', RoleEngine)
+      .mount('translation', TranslationEngine);
+  }
 
-  get access() { return this.once('access', () => new AccessEngine(this.app)) }
+  access: AccessEngine;
   /**
    * @deprecated Use `access` instead.
    */
   get accessEngine() { return this.access }
 
-  get badge() { return this.once('badge', () => new BadgeEngine(this.app)) }
+  badge: BadgeEngine;
   /**
    * @deprecated Use `badge` instead.
    */
   get badgeEngine() { return this.badge }
 
-  get motion() { return this.once('motion', () => new MotionEngine(this.app)) }
+  motion: MotionEngine;
   /**
    * @deprecated Use `motion` instead.
    */
   get motionEngine() { return this.motion }
 
-  get role() { return this.once('role', () => new RoleEngine(this.app)) }
+  role: RoleEngine;
   /**
    * @deprecated Use `role` instead.
    */
   get roleEngine() { return this.role }
-
-  get translation(): ITranslationEngine { return this.once('translation', () => new TranslationEngine(this.app)) }
 
 }

@@ -81,7 +81,9 @@ export class App extends CoreApp<User, UserExt> {
 
   // nested containers
   get contexts() { return this.once('contexts', () => new Contexts(this)) }
-  get engines() { return this.once('engines', () => new Engines(this)) }
+
+  get engines() { return this.once('engines', () => Engines.buildDefault(this)) }
+
   get repos() { return this.once('repos', () => new ReposContainer(this)) }
 
   /**

@@ -10,7 +10,7 @@
       "rootDir": "./src",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true,
+      "declarationMap": true,
       "esModuleInterop": true,
       "declaration": true,  // Generate .d.ts files for type declarations
       "declarationDir": "./dist"

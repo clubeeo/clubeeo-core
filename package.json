@@ -1,17 +1,9 @@
 {
   "name": "clubeeo-core",
-  "version": "0.6.3",
-  "description": "",
-  "type": "commonjs",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/clubeeo/clubeeo-core"
-  },
-  "bugs": {
-    "url": "https://github.com/clubeeo/clubeeo-core/issues"
-  },
+  "version": "0.6.4",
+  "description": "Clubeeo is a platform for creating and managing communities",
+  "author": "Roman Exemplarov",
+  "keywords": [],
   "scripts": {
     "web": "ts-node src/web.ts",
     "build": "tsc",
@@ -23,14 +15,6 @@
     "telegram:setWebhook": "ts-node src/console/setWebhook.ts",
     "telegram:setChatMenuButton": "ts-node src/clubApps/TelegramApp/console/setChatMenuButton.ts"
   },
-  "keywords": [],
-  "author": "Roman Exemplarov",
-  "files": [
-    "dist",
-    "src",
-    "tsconfig.json",
-    "readme.md"
-  ],
   "dependencies": {
     "@fast-csv/format": "^4.3.5",
     "@fastify/formbody": "^7.3.0",
@@ -80,5 +64,27 @@
     "ngrok": "^5.0.0-beta.2",
     "pg-mem": "^2.6.2",
     "ts-node-dev": "^2.0.0"
+  },
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clubeeo/clubeeo-core"
+  },
+  "bugs": {
+    "url": "https://github.com/clubeeo/clubeeo-core/issues"
+  },
+  "files": [
+    "dist",
+    "src",
+    "readme.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js",
+      "source": "./src/index.ts"
+    }
   }
 }

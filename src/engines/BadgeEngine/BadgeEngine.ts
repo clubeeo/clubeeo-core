@@ -11,7 +11,7 @@ import ClubRole from '../../models/ClubRole'
 import Member from '../../models/Member'
 import { EngineBase } from '../../core/lib/EngineBase'
 
-export class BadgeEngine extends EngineBase{
+export class BadgeEngine extends EngineBase {
   readonly app: App;
   readonly events: Emitter<BadgeEngineEvents>;
 

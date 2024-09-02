@@ -1,6 +1,6 @@
 import { EntityTarget } from 'typeorm';
 
-import { TCoreApp } from "../../CoreApp";
+import { TCoreApp } from "../../ClubeeoCoreApp";
 import UserRepo from "./UserRepo";
 import { IUserModel } from './UserInterfaces';
 import { ContainerBase } from '../../lib/ContainerBase';

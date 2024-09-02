@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   RelationId, OneToMany,
+  Unique,
 } from 'typeorm';
 
 import Club from './Club'
@@ -14,6 +15,7 @@ import ClubAppRole from '../engines/AppsEngine/models/ClubAppRole'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon';
 
 @Entity()
+@Unique(['name', 'club'])
 export default class ClubRole {
 
   @ClubeeoPrimaryColumn()

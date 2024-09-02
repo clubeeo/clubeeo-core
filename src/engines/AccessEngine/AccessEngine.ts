@@ -28,9 +28,13 @@ export class AccessEngine extends EngineBase {
    * @deprecated use .service
    */
   async memberHasRole(member: Member, club: Club| IEntityId, roleSlug: string) {
-    return this.service.hasRole(member, club, roleSlug);
+    return this.service.memberHasRole(member, club, roleSlug);
   }
 
+  /**
+   * 
+   * @deprecated use .service with role
+   */
   async isMemberAdmin(member: Member, club: Club| IEntityId) {
     return this.memberHasRole(member, club, 'admin');
   }

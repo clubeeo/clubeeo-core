@@ -1,12 +1,20 @@
 import fastify from "fastify";
-import CoreApp from "./CoreApp";
+import ClubeeoCoreApp from "./ClubeeoCoreApp";
 import { IUserModel } from "./domains/user/UserInterfaces";
 import { IUserExtModel } from "./domains/userExt/UserExtInterfaces";
+import { ExePureCore } from "../lib/ExePureCore";
 
 export function coreRouterFactory<
   TUser extends IUserModel,
   TUserExt extends IUserExtModel<TUser>,
-  TApp extends CoreApp<IUserModel, IUserExtModel<IUserModel>>
+  TMember extends ExePureCore.IMember,
+  TClub extends ExePureCore.IHub,
+  TApp extends ClubeeoCoreApp<
+    IUserModel,
+    IUserExtModel<IUserModel>,
+    TMember,
+    TClub
+  >
 >(app: TApp) {
   const env = app.Env;
 

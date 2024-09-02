@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { ExtError } from '../lib/ExtError';
-import CoreApp, { TCoreApp } from '../CoreApp';
+import ClubeeoCoreApp, { TCoreApp } from '../ClubeeoCoreApp';
 import { IUserModel } from '../domains/user/UserInterfaces';
 import { FindOptionsWhere } from 'typeorm';
 import User from '../../models/User';

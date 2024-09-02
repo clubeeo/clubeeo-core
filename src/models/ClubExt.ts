@@ -30,7 +30,7 @@ export default class ClubExt {
 
   @Column({type: String})
   @Index()
-  service: TExtServices;
+  service: TExtServices | string;
 
   @Column({type: String})
   @Index()

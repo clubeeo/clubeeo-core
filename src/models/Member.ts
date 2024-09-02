@@ -4,11 +4,13 @@ import {
   UpdateDateColumn,
   ManyToOne,
   RelationId, Index, Column,
+  OneToMany,
 } from 'typeorm/index';
 
 import User from './User'
 import Club from './Club'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon';
+import MemberRole from './MemberRole';
 
 @Entity()
 @Index(['user', 'club'], {unique: true})
@@ -30,6 +32,9 @@ export default class Member {
   club: Club;
   @RelationId((self: Member) => self.club)
   clubId: string;
+
+  @OneToMany(() => MemberRole, mr => mr.member)
+  memberRoles: MemberRole[];
 
   @Column({
     type: 'json',

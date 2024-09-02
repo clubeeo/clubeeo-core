@@ -6,6 +6,7 @@ import {EnginesContainerBase} from './core/lib/EngineBase'
 import {App} from './App'
 import AppsEngine from './engines/AppsEngine/AppsEngine'
 import TranslationEngine from './engines/TranslationEngine/TranslationEngine';
+import { Clubs } from './engines/Clubs/Clubs';
 
 export class Engines extends EnginesContainerBase<App> {
   protected app: App;
@@ -22,9 +23,10 @@ export class Engines extends EnginesContainerBase<App> {
       .mount('apps', AppsEngine)
       .mount('access', AccessEngine)
       .mount('badge', BadgeEngine)
+      .mount('hubs', Clubs)
       .mount('motion', MotionEngine)
       .mount('role', RoleEngine)
-      .mount('translation', TranslationEngine);
+      .mount('translations', TranslationEngine);
   }
 
   access: AccessEngine;

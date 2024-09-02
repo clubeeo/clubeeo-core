@@ -1,7 +1,7 @@
 import { IUserExtModel } from './UserExtInterfaces';
 import { IUserModel } from '../user/UserInterfaces';
 import DomainBase from '../../lib/DomainBase';
-import { TCoreApp } from '../../CoreApp';
+import { TCoreApp } from '../../ClubeeoCoreApp';
 import { EntityTarget } from 'typeorm';
 
 export default class UserExtDomain<

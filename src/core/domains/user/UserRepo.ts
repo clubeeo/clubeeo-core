@@ -1,6 +1,6 @@
 import { DeepPartial, EntityTarget, FindOptionsWhere } from "typeorm";
 
-import CoreApp, { TCoreApp } from "../../CoreApp";
+import ClubeeoCoreApp, { TCoreApp } from "../../ClubeeoCoreApp";
 import { IUserRepo, IUserModel } from "./UserInterfaces";
 
 export default class UserRepo<TUser extends IUserModel> implements IUserRepo<TUser> {

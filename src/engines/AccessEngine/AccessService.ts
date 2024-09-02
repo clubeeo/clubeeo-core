@@ -1,37 +1,32 @@
 import { In } from 'typeorm';
-import { AccessMemberContext } from "./AccessMemberContext";
+import { MemberContext } from "./AccessMemberContext";
 import { TExeContainer } from "../../core/exeInterfaces";
 import ClubRole from "../../models/ClubRole";
 import MemberRole from "../../models/MemberRole";
-
-interface IMember {
-  id: string,
-  clubId: string,
-}
-
-interface IClub {
-  id: string,
-}
+import { ExePureCore } from '../../lib/ExePureCore';
+import { AccessEngineTypes as types } from './AccessEngineTypes';
 
 /**
  * AccessService - contains the business logic for the AccessService.
  */
-export class AccessService<T extends TExeContainer> {
+export class AccessService<T extends TExeContainer> implements ExePureCore.IAccessService {
   constructor(public c: T) {
   }
 
-  memberCtx<TMember extends IMember, TClub extends IClub>(member: TMember, club: TClub) {
-    return new AccessMemberContext(this, member, club);
+  memberCtx(member: types.IMember, user: types.IUser, club: types.IClub) {
+    return new MemberContext(this, member, user, club);
   }
 
-  async hasRole(member: IMember, club: IClub, roleSlug: string) {
-    if (!member || !club) return false;
+  async can({member, hub}: ExePureCore.TMemberCtx, action: string, resource: string): Promise<boolean> {
+    return false; // don't let anything by default
+  }
 
+  async hasRole({member, hub}: ExePureCore.TMemberCtx, roleSlug: string): Promise<boolean> {
     const memberRole = await this.c.m.findOneBy('MemberRole', {
       member: {id: member.id},
-      club: {id: club.id},
+      club: {id: hub.id},
       clubRole: {
-        club: {id: club.id},
+        club: {id: hub.id},
         name: roleSlug,
       },
       enabled: true,
@@ -40,8 +35,16 @@ export class AccessService<T extends TExeContainer> {
     return !!memberRole;
   }
 
-  async getRolesMap<T extends string>(member: IMember, club: IClub, roleSlugs: T[]): Promise<Record<T, boolean>> {
-    if (!member || !club) roleSlugs.reduce((acc, roleSlug) => {
+  /**
+   * @deprecated Use hasRole instead
+   */
+  async memberHasRole(member: types.IMember, club: types.IClub, roleSlug: string) {
+    if (!member || !club) return false;
+    return this.hasRole({member, hub: club}, roleSlug);
+  }
+
+  async getRolesMap<T extends string>({member, hub}: ExePureCore.TMemberCtx, roleSlugs: T[]): Promise<Record<T, boolean>> {
+    if (!member || !hub) roleSlugs.reduce((acc, roleSlug) => {
       acc[roleSlug] = false;
       return acc;
     }, {} as Record<T, boolean>);
@@ -49,9 +52,9 @@ export class AccessService<T extends TExeContainer> {
     const memberRoles = await this.c.m.find(MemberRole, {
       where: {
         member: {id: member.id},
-        club: {id: club.id},
+        club: {id: hub.id},
         clubRole: {
-          club: {id: club.id},
+          club: {id: hub.id},
           name: In(roleSlugs),
         },
         enabled: true,
@@ -65,11 +68,9 @@ export class AccessService<T extends TExeContainer> {
     }, {} as Record<T, boolean>);
   } 
 
-  async addRole(member: IMember, club: IClub, roleSlug: string) {
-    if (!member || !club) return false;
-
+  async addRole({member, hub}: ExePureCore.TMemberCtx, roleSlug: string): Promise<boolean> {
     const clubRole = await this.c.m.findOneBy(ClubRole, {
-      club: {id: club.id},
+      club: {id: hub.id},
       name: roleSlug,
     });
 
@@ -77,7 +78,7 @@ export class AccessService<T extends TExeContainer> {
 
     await this.c.em.createOrUpdateBy(MemberRole, {
       member: {id: member.id},
-      club: {id: club.id},
+      club: {id: hub.id},
       clubRole: {id: clubRole.id},
     }, {
       enabled: true,
@@ -86,11 +87,17 @@ export class AccessService<T extends TExeContainer> {
     return true;
   }
 
-  async removeRole(member: IMember, club: IClub, roleSlug: string) {
+  /**
+   * @deprecated Use addRole instead
+   */
+  async addMemberRole(member: types.IMember, club: types.IClub, roleSlug: string) {
     if (!member || !club) return false;
+    return this.addRole({member, hub: club}, roleSlug);
+  }
 
+  async removeRole({member, hub}: ExePureCore.TMemberCtx, roleSlug: string): Promise<boolean> {
     const clubRole = await this.c.m.findOneBy(ClubRole, {
-      club: {id: club.id},
+      club: {id: hub.id},
       name: roleSlug,
     });
 
@@ -98,13 +105,21 @@ export class AccessService<T extends TExeContainer> {
 
     await this.c.em.updateIfExistBy(MemberRole, {
       member: {id: member.id},
-      club: {id: club.id},
+      club: {id: hub.id},
       clubRole: {id: clubRole.id},
     }, {
       enabled: false,
     });
 
     return true;
+  }
+
+  /**
+   * @deprecated Use removeRole instead
+   */
+  async removeMemberRole(member: types.IMember, club: types.IClub, roleSlug: string) {
+    if (!member || !club) return false;
+    return this.removeRole({member, hub: club}, roleSlug);
   }
 
 }

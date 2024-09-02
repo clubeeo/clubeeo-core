@@ -5,6 +5,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   RelationId, Index,
+  Unique,
 } from 'typeorm/index';
 
 import User from './User'
@@ -15,6 +16,8 @@ import Member from './Member'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon';
 
 @Entity()
+@Unique(['member', 'clubRole'])
+@Unique(['club', 'member'])
 export default class MemberRole {
 
   @ClubeeoPrimaryColumn()
@@ -24,6 +27,7 @@ export default class MemberRole {
   @Index({})
   enabled: boolean;
 
+  // todo: remove direct user reference
   @ManyToOne(type => User)
   user: User;
   @RelationId((self: MemberRole) => self.user)

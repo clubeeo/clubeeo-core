@@ -1,4 +1,4 @@
-import { TCoreApp } from "./CoreApp";
+import { TCoreApp } from "./ClubeeoCoreApp";
 
 export function coreWebRun(app: TCoreApp) {
   const env = app.Env;

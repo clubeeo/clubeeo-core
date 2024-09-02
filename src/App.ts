@@ -23,12 +23,14 @@ import {Engines} from './Engines'
 import {SimpleFileUploadService} from './services/uploads/SimpleFileUploadService'
 import {ClubWidgetFactory} from './factories/ClubWidgetFactory'
 import {AppFactory} from './engines/AppsEngine/AppsFactory'
-import CoreApp from './core/CoreApp';
+import ClubeeoCoreApp from './core/ClubeeoCoreApp';
 import { taskProcessingDaemon } from './daemons/TaskProcessingDaemon/taskProcessingDaemon';
 import AuthService from './services/AuthService';
 import AppSettings from './AppSettings';
 import User from './models/User';
 import UserExt from './models/UserExt';
+import Member from './models/Member';
+import Club from './models/Club';
 
 /**
  * Application service container
@@ -37,20 +39,19 @@ import UserExt from './models/UserExt';
  * * Exact implementation named as class (e.g. SyncTemplateMailerService)
  * * Interface named in snake case without "Service" suffix  (e.g. templateMailer)
  */
-export class App extends CoreApp<User, UserExt> {
+export class App extends ClubeeoCoreApp<User, UserExt, Member, Club> {
   readonly tokenEvents: Emitter<TokenEvents>;
   readonly clubUserEvents: Emitter<ClubUserEvents>;
   readonly postEvents: Emitter<TPostEvents>;
-  protected env: AppEnv;
   readonly axios = axios;
 
   constructor(env: AppEnv) {
     super({
       User: User,
-      UserExt: UserExt
+      UserExt: UserExt,
+      Member: Member,
+      Club: Club,
     });
-
-    this.env = env;
 
     this.tokenEvents = tokenEventsFactory(this);
     this.clubUserEvents = clubUserEventsFactory(this);
@@ -66,7 +67,7 @@ export class App extends CoreApp<User, UserExt> {
     }
 
     if (this.Env.workers.motion) {
-      this.engines.motionEngine.runDaemon();
+      this.engines.motion.runDaemon();
     }
   }
 
@@ -76,6 +77,9 @@ export class App extends CoreApp<User, UserExt> {
 
   get AppWeb3() { return AppWeb3.getInstance(); }
 
+  /**
+   * @deprecated use `logger` instead
+   */
   get consoleLogger(): IBricksLogger { return this.once('consoleLogger', () => new BricksLoggerConsole()) }
   get nanoid() { return nanoid }
 
@@ -83,6 +87,7 @@ export class App extends CoreApp<User, UserExt> {
   get contexts() { return this.once('contexts', () => new Contexts(this)) }
 
   get engines() { return this.once('engines', () => Engines.buildDefault(this)) }
+  get ng() { return this.engines; }
 
   get repos() { return this.once('repos', () => new ReposContainer(this)) }
 
@@ -92,15 +97,18 @@ export class App extends CoreApp<User, UserExt> {
    **/
   get DB(): DataSource { return this.db }
 
-  // i18n
-  async t(code: string, lang: string, values: Record<string, string>, def?: string) {
-    return await this.engines.translation.t(code, lang, values, def)
-  }
-
   // services
+
+  /**
+   * @deprecated access via `ng` instead
+   */
   get auth() { return this.once('auth', () => new AuthService(this)) }
 
+  /**
+   * @deprecated access via `ng` instead
+   */
   get access() { return this.once('access', () => new AccessService(this)) }
+
   get clubAppFactory() { return this.once('clubAppFactory', () => new AppFactory(this)) }
   get clubWidgetFactory() { return this.once('clubWidgetFactory', () => new ClubWidgetFactory(this)) }
   get fileUploadService() { return this.once('fileUploadService', () => new SimpleFileUploadService(this)) }
@@ -112,12 +120,18 @@ export class App extends CoreApp<User, UserExt> {
   get walletAmountFactory() { return this.once('walletAmountFactory', () => new WalletAmountFactory(this)) }
 
   // logger
+  /**
+   * @deprecated use `logger` instead
+   */
   get log(): IBricksLogger {
     return this.once('log', () => new BricksLoggerMultiProxy(
       this.consoleLogger,
       this.dbLogger,
     ));
   }
+  /**
+   * @deprecated use `logger` instead
+   */
   get dbLogger(): IBricksLogger { return this.once('dbLogger', () => new DatabaseLoggerConsole(this)) }
 
   // integrations: todo: move to engines
@@ -131,7 +145,7 @@ export class App extends CoreApp<User, UserExt> {
         __dirname + "/models/*.ts",
         __dirname + "/engines/MotionEngine/models/*.ts",
         ...Object.values(this.engines.apps.models),
-        ...Object.values(this.engines.translation.models),
+        ...Object.values(this.engines.translations.models),
       ],
     };
   }

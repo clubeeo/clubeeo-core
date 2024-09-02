@@ -1,4 +1,4 @@
-import { TCoreApp } from '../CoreApp';
+import { TCoreApp } from '../ClubeeoCoreApp';
 import { ContainerBase } from './ContainerBase';
 import { EntityManager, EntityTarget } from 'typeorm';
 

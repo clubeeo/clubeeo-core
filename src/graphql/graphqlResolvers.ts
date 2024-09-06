@@ -1,15 +1,11 @@
 import App from '../App'
 import Club from '../models/Club'
-import Wallet from '../models/Wallet'
 import User from '../models/User'
 import MemberRole from '../models/MemberRole'
-import ClubRoleToken from '../models/ClubRoleToken'
-import TokenContract from '../models/TokenContract'
 import ClubRole from '../models/ClubRole'
 import assert from 'assert'
 import {UserInClubRolesSync} from '../contexts/UserInClubContext/UserInClubRolesSync'
 import UserExt from '../models/UserExt'
-import ClubExt from '../models/ClubExt'
 import {ExtServicesEnum} from '../lib/enums'
 import mercurius from 'mercurius'
 import ErrorWithProps = mercurius.ErrorWithProps
@@ -45,7 +41,6 @@ export const graphqlResolvers = (app: App) => ({
         relations: {
           userClubRoles: {
             user: true,
-            clubRoleToken: true,
           },
         },
       });
@@ -76,10 +71,6 @@ export const graphqlResolvers = (app: App) => ({
         order: {id: 'DESC'},
       });
     },
-    wallets: async (_, obj) => {
-      const wallets = await app.m.find(Wallet, {order: {id: 'DESC'}});
-      return wallets;
-    },
   },
   Club: {
     users: async (parent: Club, args, ctx: ICtx) => {
@@ -96,7 +87,6 @@ export const graphqlResolvers = (app: App) => ({
           return {
             loggedIn: false,
             screenName: '',
-            mainWallet: {},
             isMember: false,
             isAdmin: false,
             isPlatformAdmin: false,
@@ -113,7 +103,6 @@ export const graphqlResolvers = (app: App) => ({
         return {
           loggedIn: !!user,
           screenName: user.screenName || `id${user.id}`,
-          // mainWallet: await app.m.findOneBy(Wallet, {user: {id: user.id}}),
           isMember: await userInClub.isMember({useCache: true}),
           isAdmin,
           isPlatformAdmin,
@@ -153,24 +142,9 @@ export const graphqlResolvers = (app: App) => ({
 
       const dynamicCount = await app.m.countBy(MemberRole, {
         enabled: true,
-        clubRoleToken: {
-          clubRole: {id: parent.id},
-        },
       });
 
       return staticCount + dynamicCount;
-    },
-  },
-  ClubRoleToken: {
-    tokenContract: async (parent: ClubRoleToken, args, {client, reply}) => {
-      return await app.m.findOneBy(TokenContract, {
-        id: parent.tokenContractId,
-      });
-    },
-    clubRole: async (parent: ClubRoleToken, args, {client, reply}) => {
-      return await app.m.findOneBy(ClubRole, {
-        id: parent.clubRoleId,
-      });
     },
   },
   ClubBadge: {
@@ -183,11 +157,6 @@ export const graphqlResolvers = (app: App) => ({
     },
   },
   User: {
-    wallets: async (user: User, args, {client, reply}) => {
-      return await app.m.find(Wallet, {
-        where: {user: {id: user.id}},
-      });
-    },
     memberInClub: async (user: User, obj, ctx: ICtx, info) => {
       const {slug} = obj;
 
@@ -212,9 +181,6 @@ export const graphqlResolvers = (app: App) => ({
         },
         relations: {
           clubRole: true,
-          clubRoleToken: {
-            clubRole: true,
-          },
         },
       });
 
@@ -231,16 +197,6 @@ export const graphqlResolvers = (app: App) => ({
         }
       }
     }
-  },
-  Wallet: {
-    chainNorm: (wallet: Wallet, args, {client, reply}) => {
-      return {
-        eth: 'ethereum',
-        near: 'NEAR',
-        near_testnet: 'NEAR testnet',
-        near_betanet: 'NEAR betanet',
-      }[wallet.chain] || wallet.chain.replace('_', ' ')
-    },
   },
   Mutation: {
     createClub: async (_, {id, input}, ctx: ICtx) => {

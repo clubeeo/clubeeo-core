@@ -5,7 +5,6 @@ import {
   RelationId,
 } from 'typeorm/index';
 import UserExt from './UserExt'
-import Wallet from './Wallet'
 import MemberRole from './MemberRole'
 import Club from './Club'
 import Member from './Member'
@@ -50,9 +49,6 @@ export default class User extends UserModel {
 
   @OneToMany(() => UserExt, rel => rel.user)
   userExts: UserExt[];
-
-  @OneToMany(() => Wallet, rel => rel.user)
-  wallets: Wallet[];
 
   @ManyToOne(() => Club)
   activeClub: Club;

@@ -19,13 +19,6 @@ const memberResponseSchema = obj({
           name: str(),
           // clubRole
         })),
-        clubRoleToken: nullable(obj({
-          clubRole: nullable(obj({
-            id: str(1),
-            name: str(),
-            // clubRole
-          })),
-        }, {additionalProperties: true})),
       }),
     ),
     badges: arr(
@@ -76,10 +69,7 @@ export default function (app: App) {
           enabled: true,
         },
         relations: {
-          clubRole: true,
-          clubRoleToken: {
-            clubRole: true,
-          }
+          clubRole: true
         }
       });
       const badges = await app.m.find(MemberBadge, {
@@ -194,94 +184,6 @@ export default function (app: App) {
 
       reply.send(result);
     });
-
-
-    // router.get('/', {
-    //   schema: {
-    //     description: 'UserClubRole list',
-    //     query: obj({
-    //       page: id(),
-    //       take: int(1, 1000),
-    //     }, {
-    //       optional: ['page', 'take'],
-    //     }),
-    //     params: obj({
-    //       clubSlug: str(1),
-    //     }),
-    //     response: {
-    //       200: obj({
-    //         userClubRoles: arr(
-    //           obj({
-    //             id: id(),
-    //             clubId: str(),
-    //             user: obj({
-    //               id: id(),
-    //               screenName: str(),
-    //               imgUrl: str(),
-    //               wallets: arr(obj({
-    //                 id: id(),
-    //                 address: str(),
-    //                 chain: str(),
-    //               })),
-    //               userExts: arr(obj({
-    //                 id: id(),
-    //                 service: str(),
-    //                 extId: str(),
-    //                 data: obj({}, {additionalProperties: true})
-    //               }))
-    //             }),
-    //             clubRole: nullable(obj({
-    //               id: id(),
-    //               name: str(),
-    //               clubId: id(),
-    //             })),
-    //             clubRoleToken: nullable(obj({
-    //               id: id(),
-    //               clubRole: obj({
-    //                 id: id(),
-    //                 name: str(),
-    //                 clubId: id(),
-    //                 // createdAt: str(),
-    //                 // updatedAt: str(),
-    //               }),
-    //               // createdAt: str(),
-    //               // updatedAt: str(),
-    //             })),
-    //             createdAt: str(),
-    //             updatedAt: str(),
-    //           })
-    //         ),
-    //         pagination: obj({
-    //           page: id(),
-    //           take: int(1, 1000),
-    //           skip: id(),
-    //         })
-    //       })
-    //     }
-    //   },
-    // }, async (req, resp) => {
-    //   const pagination = simplePaginator(req.query);
-    //
-    //   const club = await app.m.findOneByOrFail(Club, {
-    //     slug: req.params.clubSlug,
-    //   });
-    //
-    //   const userClubRoles = await app.m.find(UserClubRole, {
-    //     where: {
-    //       club: {id: club.id},
-    //       user: {id: Not(IsNull())},
-    //     },
-    //     relations: ['user', 'user.wallets', 'user.userExts', 'clubRole', 'clubRoleToken', 'clubRoleToken.clubRole'],
-    //     order: {id: 'DESC'},
-    //     take: pagination.take,
-    //     skip: pagination.skip,
-    //   });
-    //
-    //   resp.send({
-    //     userClubRoles,
-    //     pagination
-    //   });
-    // });
 
     next();
   }

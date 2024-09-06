@@ -53,7 +53,7 @@ export default function (app: App) {
       const user = await app.auth.getUser(req);
       if (!user) {
         return resp.code(StatusCodes.FORBIDDEN).send({
-          error: 'Please, login using wallet first',
+          error: 'Please, login first',
         })
       }
 
@@ -75,7 +75,7 @@ export default function (app: App) {
         if (userExt) {
           if (user.id != userExt.userId) {
             return resp.code(StatusCodes.FORBIDDEN).send({
-              error: 'Telegram user is already bound to another wallet address',
+              error: 'Telegram user is already bound to another account',
             })
           }
         } else {

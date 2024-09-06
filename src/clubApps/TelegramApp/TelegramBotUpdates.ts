@@ -112,39 +112,6 @@ export class TelegramBotUpdates {
       const command = getCommandAndParam(message.text);
 
       if (message.chat.type === 'private') {
-
-        // if (command.command === '/start') {
-        //   if (command.param) {
-        //     const club = await this.ports.switchUserClub({
-        //       clubSlug: command.param.split(' ')[0].toLowerCase(),
-        //       tgUserId: message.from.id,
-        //       tgChatId: message.chat.id,
-        //     });
-        //
-        //     if (club) {
-        //       await this.ports.sendMessage(message.chat.id, `${club.name} is active\n\nuse /help for bot info`, {
-        //         reply_markup: {
-        //           inline_keyboard: [
-        //             [{
-        //               text: `open ${club.name} menu`,
-        //               web_app: {url: `${this.app.Env.tgCallbackRoot}/telegram/webapp/${club.slug}`},
-        //             }],
-        //           ],
-        //         },
-        //       });
-        //       return;
-        //     }
-        //
-        //     await this.ports.sendMessage(message.chat.id, "You're binding your wallet to Telegram account", {
-        //       reply_markup: {
-        //         inline_keyboard: [
-        //           [{text: 'Confirm', callback_data: `${CallbackQueryCommands.signin}:${command.param}`}],
-        //         ],
-        //       },
-        //     });
-        //   }
-        // }
-
         if (command.command) {
           await this.ports.botCommandEvents.emit('command', {
             message,
@@ -210,61 +177,12 @@ export class TelegramBotUpdates {
 
           const club = await this.ports.clubBySlug({clubSlug});
           if (club) {
-            await this.ports.sendMessage(channel_post.chat.id, `${club.name} is active`, {
-              // reply_markup: {
-              // inline_keyboard: [
-              //   [{
-              //     text: `open ${club.name} menu`,
-              //     web_app: {url: `${this.app.Env.tgCallbackRoot}/telegram/webapp/${clubSlug}`}
-              //   }],
-              // ],
-              // },
-            });
+            await this.ports.sendMessage(channel_post.chat.id, `${club.name} is active`, {});
           } else {
             await this.ports.sendMessage(channel_post.chat.id, `Can't switch to ${clubSlug}`, {});
           }
         }
       }
-
-      //   if (message.chat.type === 'private') {
-      //
-      //     if (command.command === '/start') {
-      //       if (command.param) {
-      //         if (command.param.startsWith('club:')) {
-      //           const clubSlug = command.param.split('club:')[1];
-      //           if (!clubSlug) return;
-      //
-      //           const club = await this.ports.switchUserClub({clubSlug, tgUserId: message.from.id, tgChatId: message.chat.id});
-      //           if (club) {
-      //             await this.ports.sendMessage(message.chat.id, `${club.name} is active`, {
-      //               reply_markup: {
-      //                 inline_keyboard: [
-      //                   [{text: `open ${club.name} menu`, web_app: {url: `${this.app.Env.tgCallbackRoot}/telegram/webapp/${clubSlug}`}}],
-      //                 ],
-      //               },
-      //             });
-      //           } else {
-      //             await this.ports.sendMessage(message.chat.id, `Can't switch to ${clubSlug}`, {});
-      //           }
-      //
-      //         } else if (this.ports.signInUser) {
-      //
-      //           await this.ports.sendMessage(message.chat.id, "You're binding your wallet to Telegram account", {
-      //             reply_markup: {
-      //               inline_keyboard: [
-      //                 [{text: 'Confirm', callback_data: `${CallbackQueryCommands.signin}:${command.param}`}],
-      //               ],
-      //             },
-      //           });
-      //
-      //         }
-      //       }
-      //     }
-      //   } else { // group, supergroup or channel
-      //     if (command.command === '/activate') {
-      //       await this.ports.activateClub(message, command.param);
-      //     }
-      //   }
     }
 
     return null; // stub

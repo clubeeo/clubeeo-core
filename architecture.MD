@@ -1,11 +1,6 @@
 
 #### NoDBContainer:
-- AppWeb3
-  - ethProvider
-  - ethWeb3
-  - EthSignatureVerificationService
 - Env
-- MoralisApi
 - consoleLogger: BricksLoggerConsole
 - log: consoleLogger
 
@@ -30,28 +25,22 @@ libs:
 - UserRepo _## todo: move to repos_
 - ClubRepo _## todo: move to repos_
 - MeInClubService
-- WalletService
 - repos: ReposContainer
     - club
     - clubExt
-    - clubRoleToken
     - userClubRole
     - user
     - userExt
     - extCode
-    - walletNft
-- walletAmountFactory
 - TelegramContainer
 - contexts
     - auth
     - chain
     - club
     - contract
-    - contractWallet
     - clubApp
     - user
     - userInClub
-    - wallet
 - engines
     - accessEngine
     - badgeEngine

@@ -1,8 +1,5 @@
 import App from '../App';
-import Wallet from '../models/Wallet';
-import TokenContract from '../models/TokenContract';
 import Club from '../models/Club'
-import {MockChainsEnum} from '../lib/TChains'
 import User from '../models/User'
 import {id, str} from 'json-schema-blocks'
 
@@ -42,66 +39,6 @@ export default function (app: App) {
       resp.send({
         isMember,
         isMemberCached,
-      });
-    });
-
-    /**
-     * Add mock token by userId & contractId
-     */
-    router.get('/wallet/:walletAddress/token/:tokenId/add', async (req, resp) => {
-      const walletAddress = req.params.walletAddress;
-      const chain = MockChainsEnum.mock_chain;
-      const wallet = await app.m.findOneByOrFail(Wallet, {
-        address: walletAddress,
-        chain,
-      });
-
-      const tokenId = req.params.tokenId;
-      const tokenContract = await app.m.findOneByOrFail(TokenContract, {
-        id: tokenId,
-        chain,
-      });
-
-      const walletNft = await app.repos.walletNft.createOrUpdate({
-        walletAddress: wallet.address,
-        chain,
-        contractAddress: tokenContract.address,
-        ownedAmount: 1,
-      });
-
-      resp.send({
-        ok: true,
-        walletNft,
-      });
-    });
-
-    /**
-     * Removes mock token by userId & contractId
-     */
-    router.get('/wallet/:walletAddress/token/:tokenId/remove', async (req, resp) => {
-      const walletAddress = req.params.walletAddress;
-      const chain = MockChainsEnum.mock_chain;
-      const wallet = await app.m.findOneByOrFail(Wallet, {
-        address: walletAddress,
-        chain,
-      });
-
-      const tokenId = req.params.tokenId;
-      const tokenContract = await app.m.findOneByOrFail(TokenContract, {
-        id: tokenId,
-        chain,
-      });
-
-      const walletNft = await app.repos.walletNft.createOrUpdate({
-        walletAddress: wallet.address,
-        chain,
-        contractAddress: tokenContract.address,
-        ownedAmount: 0,
-      });
-
-      resp.send({
-        ok: true,
-        walletNft,
       });
     });
 

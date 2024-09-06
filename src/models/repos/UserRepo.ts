@@ -76,9 +76,6 @@ export default class UserRepo extends UserRepoBase<User> {
       relations: {
         userClubRoles: {
           clubRole: true,
-          clubRoleToken: {
-            clubRole: true,
-          }
         },
         badges: {
           clubBadge: true,
@@ -92,8 +89,8 @@ export default class UserRepo extends UserRepoBase<User> {
     return user;
   }
 
-  async search(club: Club | IEntityId, opts: {searchWallet?: string, searchName?: string, page?: number, take?: number} = {}, relations?: FindOptionsRelations<User>) {
-    const {searchWallet, searchName, page: pageArg, take: takeArg} = opts;
+  async search(club: Club | IEntityId, opts: {searchName?: string, page?: number, take?: number} = {}, relations?: FindOptionsRelations<User>) {
+    const {searchName, page: pageArg, take: takeArg} = opts;
 
     const userWhere: FindOptionsWhere<User> = {
       userClubRoles: {
@@ -101,11 +98,6 @@ export default class UserRepo extends UserRepoBase<User> {
         // enabled: true,
       }
     };
-    if (searchWallet && searchWallet.length >= 4) {
-      userWhere.wallets = {
-        address: ILike(searchWallet + '%'),
-      }
-    }
     if (searchName && searchName.length >= 3) {
       userWhere.screenName = ILike(searchName + '%');
     }
@@ -116,11 +108,6 @@ export default class UserRepo extends UserRepoBase<User> {
         enabled: true,
       }
     };
-    if (searchWallet && searchWallet.length >= 4) {
-      memberWhere.wallets = {
-        address: ILike(searchWallet + '%'),
-      }
-    }
     if (searchName && searchName.length >= 3) {
       memberWhere.screenName = ILike(searchName + '%');
     }

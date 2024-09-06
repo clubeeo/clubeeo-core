@@ -1,5 +1,4 @@
 import User from '../User'
-import {EvmChainsEnum} from '../../lib/TChains'
 
 export class UserWrap {
   user: User;

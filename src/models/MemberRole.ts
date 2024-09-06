@@ -11,13 +11,12 @@ import {
 import User from './User'
 import Club from './Club'
 import ClubRole from './ClubRole'
-import ClubRoleToken from './ClubRoleToken'
 import Member from './Member'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon';
 
 @Entity()
 @Unique(['member', 'clubRole'])
-@Unique(['club', 'member'])
+@Index(['club', 'member'])
 export default class MemberRole {
 
   @ClubeeoPrimaryColumn()
@@ -47,11 +46,6 @@ export default class MemberRole {
   clubRole: ClubRole;
   @RelationId((self: MemberRole) => self.clubRole)
   clubRoleId: string;
-
-  @ManyToOne(() => ClubRoleToken)
-  clubRoleToken: ClubRoleToken;
-  @RelationId((self: MemberRole) => self.clubRoleToken)
-  clubRoleTokenId: string;
 
   // DB auto insert time
   @CreateDateColumn()

@@ -11,7 +11,6 @@ import {
 import User from './User'
 import Club from './Club'
 import ClubRole from './ClubRole'
-import ClubRoleToken from './ClubRoleToken'
 
 @Entity()
 export default class UserClubRole {
@@ -37,11 +36,6 @@ export default class UserClubRole {
   clubRole: ClubRole;
   @RelationId((self: UserClubRole) => self.clubRole)
   clubRoleId: number;
-
-  @ManyToOne(() => ClubRoleToken)
-  clubRoleToken: ClubRoleToken;
-  @RelationId((self: UserClubRole) => self.clubRoleToken)
-  clubRoleTokenId: number;
 
   // DB auto insert time
   @CreateDateColumn()

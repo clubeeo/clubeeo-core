@@ -1,4 +1,3 @@
-import {Chains} from '../lib/TChains'
 import {badgeMutationsSchema, badgesMutationsTypes, clubBadgeType} from './badgesGraphql'
 import {clubRoleType, rolesMutationsSchema, rolesMutationsTypes} from './rolesGraphql'
 
@@ -10,7 +9,6 @@ type Query {
   me: Me!
   users: [User]!
   userClubRoles: [UserClubRole]!
-  wallets: [Wallet]!
 }
 
 type Club {
@@ -24,7 +22,7 @@ type Club {
   style: ClubStyle!
   settings: Club_Settings!
   userClubRoles: [UserClubRole]
-  users(searchWallet: String, searchName: String, page: Int, take: Int): UserIndex
+  users(searchName: String, page: Int, take: Int): UserIndex
   roles: [ClubRole]
   badges: [ClubBadge]
   meInClub: MeInClub!
@@ -94,12 +92,6 @@ type ClubApp {
 
 ${clubRoleType}
 
-type ClubRoleToken {
-  id: ID!
-  clubRole: ClubRole!
-  tokenContract: TokenContract!
-}
-
 ${clubBadgeType}
 
 type Me {
@@ -117,7 +109,6 @@ type MeInClub {
   isPlatformAdmin: Boolean!
   isPremium: Boolean
   screenName: String!
-  mainWallet: Wallet
   menu: MyClubMenu
 }
 type MyClubMenu {
@@ -130,23 +121,11 @@ type MyClubMenuItem {
   icon: String
 }
 
-type TokenContractConfig {
-  tokenIdPrefix: String
-}
-type TokenContract {
-  id: ID!
-  address: String!
-  chain: String!
-  standard: String!
-  config: TokenContractConfig
-}
-
 type UserClubRole {
   id: ID!
   club: Club!
   user: User!
   clubRole: ClubRole
-  clubRoleToken: ClubRoleToken
 }
 
 type UserList {
@@ -158,7 +137,6 @@ type UserListItem {
   id: ID!
   userList: UserList!
   user: User!
-  wallet: Wallet
   createdAt: String!
   updatedAt: String!
 }
@@ -171,7 +149,6 @@ type User {
   password: String!
   confirmed: String!
   timezone: String!
-  wallets: [Wallet]!
   userExts: [UserExt]!
   createdAt: String!
   updatedAt: String!
@@ -195,21 +172,6 @@ type UserExt_GetAccount {
   link: String!
   name: String!
 }
-
-type Wallet {
-  id: ID!
-  address: String!
-  chain: ChainsEnum!
-  user: User!
-  createdAt: String!
-  updatedAt: String!
-  chainNorm: String!
-}
-
-enum ChainsEnum {
-  ${Object.values(Chains).join("\n")}
-}
-
 
 type Mutation {
   createClub(input: CreateClubInput!): Club!

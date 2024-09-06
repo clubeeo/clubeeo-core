@@ -129,43 +129,14 @@ export class ClubContext {
         club: {id: this.club.id},
       },
       relations: {
-        clubRoleTokens: {
-          tokenContract: true,
-        },
         userClubRoles: {
-          user: {
-            wallets: true,
-          },
+          user: true,
         },
       },
     });
 
-    //todo: member role name: forbid repetition
-
     return {
       name: this.club.name,
-      roles: Object.fromEntries(roles.map((role) => {
-        return [role.name, {
-          allow: role.clubRoleTokens.map(clubRoleToken => {
-            const tokenContract = clubRoleToken.tokenContract;
-
-            return {
-              address: tokenContract.address,
-              chain: tokenContract.chain,
-              standard: tokenContract.standard,
-            }
-          }),
-          members: role.userClubRoles.map(userClubRole => {
-            const wallet = userClubRole.user.wallets[0];
-            if (!wallet) return {};
-
-            return {
-              address: wallet.address,
-              chain: wallet.chain,
-            }
-          }),
-        }]
-      })),
     }
   }
 }

@@ -16,23 +16,6 @@ export type TPostEvents = {
     reaction: PostReaction,
     user: User,
   }
-  // tokenAmountChanged: {},
-  // tokenIsAcquired: {
-  //   walletNft: WalletNft,
-  // },
-  // tokenIsSold: {
-  //   // tokenContract: string,
-  //   walletNft: WalletNft,
-  //   previousAmount: number,
-  // },
-  // tokenAmountIncreased: {
-  //   walletNft: WalletNft,
-  //   previousAmount: number,
-  // },
-  // tokenAmountDecreased: {
-  //   walletNft: WalletNft,
-  //   previousAmount: number,
-  // }
 };
 
 export function postEventsFactory(app: App): Emitter<TPostEvents> {

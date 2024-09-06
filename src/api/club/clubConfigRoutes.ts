@@ -52,11 +52,6 @@ export default function (app: App) {
         where: {
           club: {id: club.id}
         },
-        relations: {
-          clubRoleTokens: {
-            tokenContract: true
-          }
-        },
         order: {
           id: 'DESC',
         }

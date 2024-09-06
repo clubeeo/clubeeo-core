@@ -47,11 +47,6 @@ export class AccessEngine extends EngineBase {
     clubApp: ClubApp,
     accessTo: string,
   ) {
-    // todo: use @everyone role
-    if (clubApp.appName === 'eth-wallet') {
-      return true;
-    }
-
     const everyoneHasAccess = await this.app.m.countBy(ClubRole, {
       club: {id: clubApp.clubId},
       name: '@everyone',
@@ -101,29 +96,6 @@ export class AccessEngine extends EngineBase {
     const accessTo = `action:${appActionName}`;
     return await this.memberHasAccessToAppObject(member, clubApp, accessTo);
   }
-
-  // async memberHasAccessToApp(member: Member, clubApp: ClubApp) {
-  //   if (await this.isMemberAdmin(member, {id: clubApp.clubId})) {
-  //     return true;
-  //   }
-  //
-  //   // todo: use @everyone role
-  //   if (clubApp.appName === 'eth-wallet') {
-  //     return true;
-  //   }
-  //
-  //   return await this.app.m.countBy(ClubRole, {
-  //     club: {id: clubApp.clubId},
-  //     clubAppRoles: {
-  //       clubApp: {id: clubApp.id},
-  //     },
-  //     userClubRoles: {
-  //       club: {id: clubApp.clubId},
-  //       member: {id: member.id},
-  //       enabled: true,
-  //     },
-  //   }) > 0;
-  // }
 
   /**
    * @deprecated use member instead of user
@@ -191,27 +163,6 @@ export class AccessEngine extends EngineBase {
     if (await this.isUserAdmin(user, {id: clubApp.clubId})) {
       return true;
     }
-    //todo: get rid of first request
-
-    if (clubApp.appName === 'eth-wallet') {
-      return true;
-    }
-
-    const clubRoleTokenCount = await this.app.m.countBy(ClubRole, {
-      club: {id: clubApp.clubId},
-      clubAppRoles: {
-        clubApp: {id: clubApp.id},
-      },
-      clubRoleTokens: {
-        userClubRoles: {
-          club: {id: clubApp.clubId},
-          user: {id: user.id},
-          enabled: true,
-        },
-      },
-    });
-
-    if (clubRoleTokenCount > 0) return true;
 
     return await this.app.m.countBy(ClubRole, {
       club: {id: clubApp.clubId},

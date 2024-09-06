@@ -3,11 +3,9 @@ import User from '../models/User'
 import Club from '../models/Club'
 import MemberRole from '../models/MemberRole'
 import {UserInClubRolesSync} from './UserInClubContext/UserInClubRolesSync'
-import WalletCachedServiceService from '../services/WalletCachedService'
 import {In, IsNull, Not} from 'typeorm'
 import {StatusCodes} from 'http-status-codes'
 import mercurius from 'mercurius'
-import Wallet from '../models/Wallet'
 import MemberBadge from '../models/MemberBadge'
 import Member from '../models/Member'
 import {FindOptionsWhere} from 'typeorm/find-options/FindOptionsWhere'
@@ -49,16 +47,6 @@ export default class UserInClubContext {
     return this.app.contexts.user(this.user);
   }
 
-  // async refreshTokens() {
-  //   if (!this.user) return false;
-  //
-  //   const app = this.app;
-  //   const clubRoleTokens = await this.app.repos
-  //     .clubRoleToken.findByClubWithTokenContract(this.club);
-  //
-  //
-  // }    ldfldl
-
   async fetchMember() {
     if (this.member) {
       return {
@@ -89,6 +77,9 @@ export default class UserInClubContext {
     return result;
   }
 
+  /**
+   * @deprecated
+   */
   async isMember(opts?: { useCache?: boolean, forceSync?: boolean }) {
     if (!this.user) return false;
 
@@ -98,28 +89,7 @@ export default class UserInClubContext {
     // check static roles
 
     let result = false;
-    if (await this.hasAnyStaticRole()) {
-      result = true;
-      if (!opts?.forceSync) return result;
-    }
-
-    // check NFT roles
-    if (opts?.useCache) {
-      const cachedWalletService = new WalletCachedServiceService(app);
-
-      userInClubRolesSync = new UserInClubRolesSync({
-        m: app.m,
-        WalletService: cachedWalletService,
-        log: app.log,
-        repos: app.repos,
-      }, this.user, this.club);
-
-      return await userInClubRolesSync.roleSync();
-    } else {
-      userInClubRolesSync = new UserInClubRolesSync(app, this.user, this.club);
-    }
-
-    return await userInClubRolesSync.roleSync() || result;
+    return await this.hasAnyStaticRole();
   }
 
   //todo: add to engine
@@ -235,31 +205,14 @@ export default class UserInClubContext {
         enabled: true,
       },
       order: {id: 'DESC'},
-      relations: {clubRole: true, clubRoleToken: {clubRole: true}},
+      relations: {clubRole: true},
     });
 
     const roleIds = new Set<string>();
 
     return userClubRoles
-      .map(ucr => ucr.clubRole || ucr.clubRoleToken?.clubRole)
+      .map(ucr => ucr.clubRole)
       .filter(role => role && (roleIds.has(role.id) ? false : roleIds.add(role.id)));
-  }
-
-  // async storedClubRoles() {
-  //   await this.app.m.find(UserClubRole, {
-  //     where: {
-  //       user: {id: this.user.id},
-  //       club: {id: this.club.id},
-  //     },
-  //     relations: ['clubRole', 'clubRoleToken', 'clubRoleToken.clubRole']
-  //   });
-  // }
-
-  async getMainWallet() {
-    //todo: add wallet load logic
-    return await this.app.m.findOneBy(Wallet, {
-      user: {id: this.user.id},
-    });
   }
 
   async getMenuItems(): Promise<Array<IAppMenuItem>> {

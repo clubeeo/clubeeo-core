@@ -2,19 +2,15 @@ import {nanoid} from 'nanoid';
 import {AppEnv} from './appEnv';
 import {IModelHooksService, ModelHooksDummyService} from './services/ModelHooksService';
 import {UserManageService} from './services/user/UserManageService';
-import AppWeb3 from './services/web3/AppWeb3';
 import {AccessService} from './services/AccessService'
 import {BricksLoggerConsole, BricksLoggerMultiProxy, IBricksLogger} from 'bricks-ts-logger';
 import {DatabaseLoggerConsole} from './services/DatabaseLogger'
 import axios from 'axios';
-import WalletService from './services/WalletService';
 import {MeInClubService} from './services/MeInClubService'
-import {TokenEvents, tokenEventsFactory} from './events/tokenEvents'
 import {Emitter} from 'mitt'
 import {ReposContainer} from './models/repos/ReposContainer'
 import {ClubUserEvents, clubUserEventsFactory} from './events/clubUserEvents'
 import {DataSource} from 'typeorm/data-source/DataSource'
-import {WalletAmountFactory} from './services/walletAmount/WalletAmountFactory'
 import {TelegramContainer} from './clubApps/TelegramApp/TelegramContainer'
 import {Contexts} from './Contexts'
 import {UserSenderService} from './services/UserSenderService'
@@ -40,7 +36,6 @@ import Club from './models/Club';
  * * Interface named in snake case without "Service" suffix  (e.g. templateMailer)
  */
 export class App extends ClubeeoCoreApp<User, UserExt, Member, Club> {
-  readonly tokenEvents: Emitter<TokenEvents>;
   readonly clubUserEvents: Emitter<ClubUserEvents>;
   readonly postEvents: Emitter<TPostEvents>;
   readonly axios = axios;
@@ -53,7 +48,6 @@ export class App extends ClubeeoCoreApp<User, UserExt, Member, Club> {
       Club: Club,
     });
 
-    this.tokenEvents = tokenEventsFactory(this);
     this.clubUserEvents = clubUserEventsFactory(this);
     this.postEvents = postEventsFactory(this);
   }
@@ -74,8 +68,6 @@ export class App extends ClubeeoCoreApp<User, UserExt, Member, Club> {
   get Env() { return this.once('Env', () => AppEnv.getInstance()) }
 
   get Settings() { return this.once('Settings', () => new AppSettings(this)) }
-
-  get AppWeb3() { return AppWeb3.getInstance(); }
 
   /**
    * @deprecated use `logger` instead
@@ -116,8 +108,6 @@ export class App extends ClubeeoCoreApp<User, UserExt, Member, Club> {
   get modelHooks(): IModelHooksService { return this.once('modelHooks', () => new ModelHooksDummyService(this)) }
   get UserManageService() { return this.once('UserManageService', () => new UserManageService(this)) }
   get userSender() { return this.once('userSender', () => new UserSenderService(this)) }
-  get WalletService() { return this.once('WalletService', () => new WalletService(this)) }
-  get walletAmountFactory() { return this.once('walletAmountFactory', () => new WalletAmountFactory(this)) }
 
   // logger
   /**

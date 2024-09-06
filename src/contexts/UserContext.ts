@@ -1,8 +1,6 @@
 import App from '../App'
 import User from '../models/User'
 import UserExt from '../models/UserExt'
-import Wallet from '../models/Wallet'
-import {EvmChainsEnum, NearChainsEnum} from '../lib/TChains'
 import {In} from 'typeorm'
 import Club from '../models/Club'
 import {ExtServicesEnum} from '../lib/enums'
@@ -36,26 +34,6 @@ export class UserContext {
       enabled: true,
     });
     return userExtCount > 0;
-  }
-
-  async ethWalletIsLoggedIn() {
-    if (!this.user) return false;
-
-    const userWalletCount = await this.app.m.countBy(Wallet, {
-      user: {id: this.user.id},
-      chain: EvmChainsEnum.eth,
-    });
-    return userWalletCount > 0;
-  }
-
-  async nearWalletIsLoggedIn() {
-    if (!this.user) return false;
-
-    const userWalletCount = await this.app.m.countBy(Wallet, {
-      user: {id: this.user.id},
-      chain: In(Object.keys(NearChainsEnum))
-    });
-    return userWalletCount > 0;
   }
 
   async isPlatformAdmin() {

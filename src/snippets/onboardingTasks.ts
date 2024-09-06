@@ -7,7 +7,6 @@ import ClubExt from '../models/ClubExt'
 import ExtCode, {ExtCodeTypes} from '../models/ExtCode'
 import Member from '../models/Member'
 import {eventNames} from '../engines/MotionEngine/shared/eventNames'
-import Wallet from '../models/Wallet'
 
 async function checkChatMember(app: App, tgUserExt: UserExt, chatId: string) {
   try {
@@ -24,16 +23,6 @@ async function checkChatMember(app: App, tgUserExt: UserExt, chatId: string) {
     return false;
   }
 }
-
-// async function getChatLink(user: User, chatId: string) {
-//   const tgUserExt = await app.m.findOneBy(UserExt, {
-//     service: ExtService.tg,
-//     user: {id: user.id},
-//     enabled: true,
-//   });
-//
-//   return tgUserExt.data['chatInviteLink'];
-// }
 
 export async function onboardingTasks(app: App, taskId: string, club: Club, user: User) {
   const stepsConfig = club.settings['steps'] || [];
@@ -189,10 +178,6 @@ export async function onboardingTasks(app: App, taskId: string, club: Club, user
         }, {
           locator: completedKey, //todo: use for triggers/events
           completedKey,
-          wallet: (await app.m.findOneBy(Wallet, {
-            user: {id: user.id},
-            //todo: club/task chain!
-          })).address, //todo: multiwallet!
         });
 
       if (!member.state[completedKey]) {

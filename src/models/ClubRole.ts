@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 
 import Club from './Club'
-import ClubRoleToken from './ClubRoleToken'
 import MemberRole from './MemberRole'
 import ClubAppRole from '../engines/AppsEngine/models/ClubAppRole'
 import {ClubeeoPrimaryColumn} from '../lib/modelCommon';
@@ -28,9 +27,6 @@ export default class ClubRole {
   club: Club
   @RelationId((self: ClubRole) => self.club)
   clubId: string
-
-  @OneToMany(() => ClubRoleToken, clubRoleToken => clubRoleToken.clubRole)
-  clubRoleTokens: ClubRoleToken[];
 
   @OneToMany(() => MemberRole, userClubRole => userClubRole.clubRole)
   userClubRoles: MemberRole[];

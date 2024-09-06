@@ -1,10 +1,7 @@
-import UserExt from '../../models/UserExt'
 import {StatusCodes} from 'http-status-codes'
 import {ExtServicesEnum} from '../../lib/enums'
 import App from '../../App'
-import Member from '../../models/Member'
 import ClubExt from '../../models/ClubExt'
-import {rpc_errors} from 'near-api-js/lib/utils'
 import {IAppMenuItem} from '../../contexts/UserInClubContext'
 
 import Club from '../../models/Club'

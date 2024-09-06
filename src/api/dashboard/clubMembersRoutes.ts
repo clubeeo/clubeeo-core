@@ -19,7 +19,6 @@ export default function (app: App) {
       const take = req.query.take;
 
       const result = await app.repos.user.search(club, {take}, {
-        wallets: true,
         userExts: true,
       });
 
@@ -31,7 +30,6 @@ export default function (app: App) {
 
       csvStream.write([
         'name',
-        'wallet',
         'telegram',
         'badges',
       ]);
@@ -42,7 +40,6 @@ export default function (app: App) {
 
         csvStream.write([
           wUser.screenNameView,
-          user.wallets.map(w => w.address).join(', '),
           user.userExts.filter(uExt => uExt.service === ExtServicesEnum.tg).map(w => w.data['from']?.['username']).join(', '),
           (await userInClub.getBadges()).map(b => `${b.clubBadge.title}#${b.index}`),
           moment(await userInClub.joinDate())?.format('YYYY-MM-DD hh:mm:ss'),

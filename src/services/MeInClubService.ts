@@ -1,7 +1,6 @@
 import {BaseService} from './BaseService'
 import User from '../models/User'
 import Club from '../models/Club'
-import Wallet from '../models/Wallet'
 
 export class MeInClubService extends BaseService {
   async meInClub(user: User, club: Club) {
@@ -32,22 +31,7 @@ export class MeInClubService extends BaseService {
       }
     };
 
-    const ethEnabled = Boolean(club.settings.eth?.enabled || club.settings.eth?.enabled === undefined);
-    const nearEnabled = Boolean(club.settings.near?.enabled);
-
-    const wallets = {
-      eth: {
-        loggedIn: await userCtx.ethWalletIsLoggedIn(),
-        enabled: ethEnabled,
-      },
-      near: {
-        loggedIn: await userCtx.nearWalletIsLoggedIn(),
-        enabled: nearEnabled,
-      }
-    };
-
     const userData = user ? {
-      mainWallet: user ? await app.m.findOneBy(Wallet, {user: {id: user.id}}) : null,
       screenName: user.screenName || `id${user.id}`,
     } : {}
 
@@ -55,7 +39,6 @@ export class MeInClubService extends BaseService {
       isLoggedIn,
       isMember,
       services,
-      wallets,
       ...userData,
     };
   }

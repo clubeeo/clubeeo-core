@@ -2,12 +2,9 @@ import {App} from './App';
 
 import clubRoutes from './api/clubRoutes';
 import postRoutes from './api/postRoutes';
-import walletRoutes from './api/walletRoutes';
 import debugRoutes from './api/debugRoutes';
 import authRoutes from './api/auth/authRoutes';
-import web3Routes from './api/web3Routes';
 import telegramAuthRoutes from './api/telegram/telegramAuthRoutes'
-import nftMetaRoutes from './api/nft/nftMetaRoutes'
 import clubMembersRoutes from './api/club/clubMembersRoutes'
 import clubAppsRoutes from './api/clubAppsRoutes'
 import clubFormsRoutes from './api/club/clubFormsRoutes'
@@ -24,7 +21,6 @@ import webhooksApi from './clubApps/WebhookEndpointApp/api/webhooksApi'
 import leaderboardAppRoutes from './clubApps/LeaderboardApp/api/leaderboardAppRoutes'
 import pageAppRoutes from './clubApps/PageApp/api/pageAppRoutes'
 import globalRoutes from './api/globalRoutes'
-import ethGatingAppRoutes from './clubApps/EthGatingApp/api/ethGatingAppRoutes'
 import feedAppRoutes from './clubApps/FeedApp/api/feedAppRoutes';
 import telegramAppRoutes from './clubApps/TelegramApp/api/telegramAppRoutes';
 
@@ -48,8 +44,6 @@ export default function (app: App) {
     router.register(feedAppRoutes(app));
 
     router.register(leaderboardAppRoutes(app));
-
-    router.register(ethGatingAppRoutes(app));
 
     router.register(platformClubsAppRoutes(app), {prefix: '/platformClubs'});
 
@@ -92,8 +86,6 @@ export default function (app: App) {
 
     router.register(globalRoutes(app), {prefix: '/global'});
 
-    router.register(nftMetaRoutes(app), {prefix: '/nft'});
-
     router.register(debugRoutes(app), {prefix: '/debug'});
 
     router.register(postRoutes(app), {prefix: '/post'});
@@ -103,10 +95,6 @@ export default function (app: App) {
     router.register(telegramAuthRoutes(app), {prefix: '/telegram/auth'});
 
     router.register(uploadsRoutes(app), {prefix: '/uploads'});
-
-    router.register(walletRoutes(app), {prefix: '/wallet'});
-
-    router.register(web3Routes(app), {prefix: '/web3'});
 
     router.register(clubByIdAppsRoutes, {prefix: '/club/:clubId/apps'});
 

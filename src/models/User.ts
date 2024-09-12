@@ -35,7 +35,7 @@ export default class User extends UserModel {
   @Column({nullable: true})
   changePasswordCreatedAt: Date;
 
-  @Column({type: String, default: ''})
+  @Column({type: String, default: 'en'})
   lang: string;
 
   @OneToMany(() => Member, rel => rel.user)

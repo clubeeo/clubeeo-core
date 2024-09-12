@@ -11,16 +11,16 @@ export default abstract class UserModel extends ModelBase implements IUserModel 
   @Index({unique: true})
   email: string;
 
-  @Column({type: String})
+  @Column({type: String, nullable: true})
   password: string;
 
-  @Column({type: String})
+  @Column({type: String, nullable: true})
   screenName: string;
 
-  @Column({type: String})
+  @Column({type: String, nullable: true})
   timezone: string;
 
-  @Column({type: String})
+  @Column({type: String, default: 'en'})
   lang: string;
 
 }

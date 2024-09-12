@@ -6,6 +6,8 @@ import ClubAppRole from './models/ClubAppRole';
 import ClubAppRepo from './repos/ClubAppRepo'
 import { EngineBase } from '../../core/lib/EngineBase';
 import { AppsService } from './AppsService';
+import { appRegistry } from './AppsRegistry';
+import { IAppConfig } from '../../interfaces/IClubApp';
 
 export default class AppsEngine extends EngineBase {
   readonly type = 'engine';
@@ -14,6 +16,7 @@ export default class AppsEngine extends EngineBase {
   readonly repos: {
     clubApp: ClubAppRepo,
   }
+  readonly registry: Record<string, IAppConfig>;
 
   constructor(app: App) {
     super();
@@ -23,6 +26,7 @@ export default class AppsEngine extends EngineBase {
     this.repos = {
       clubApp: new ClubAppRepo(app),
     };
+    this.registry = appRegistry;
   }
 
   models = {

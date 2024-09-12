@@ -12,6 +12,7 @@ export * from './core/exeInterfaces';
 export {ContainerBase} from './core/lib/ContainerBase';
 export * from './core/lib/EngineBase';
 export * from './core/lib/EnvDecorator';
+export * from './core/lib/EnvBuilder';
 export * from './core/lib/ExtendedEntityManager';
 export * from './core/lib/ExtError';
 

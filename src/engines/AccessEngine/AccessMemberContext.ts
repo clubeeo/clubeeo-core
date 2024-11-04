@@ -16,7 +16,7 @@ export class MemberContext<
     if (!user?.id) throw new Error('User has no id')
     if (!member?.clubId) throw new Error('Member has no clubId');
     if (member.clubId !== club.id) throw Error('Member does not belong to the club');
-    if (member.userId !== club.id) throw Error('Member does not belong to the club');
+    if (member.userId !== user.id) throw Error('Member does not belong to the club');
   }
 
   hubEntityName = 'Club';

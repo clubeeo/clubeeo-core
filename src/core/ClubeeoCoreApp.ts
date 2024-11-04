@@ -23,7 +23,7 @@ export default abstract class ClubeeoCoreApp<
   TClub extends ExePureCore.IHub,
 > extends ContainerBase implements ExePureCore.IAppContainer<TMember, TUser, TClub> {
 
-  constructor(protected models: {
+  constructor(readonly models: {
     User: EntityTarget<TUser>,
     UserExt: EntityTarget<TUserExt>,
     Member: EntityTarget<TMember>,

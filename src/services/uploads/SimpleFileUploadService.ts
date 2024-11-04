@@ -32,7 +32,7 @@ export class SimpleFileUploadService {
     const uid = nanoid(32);
 
     const name = `${uid}.${ext}`;
-    const path = `/static/uploads/${name}`;
+    const path = `static/uploads/${name}`;
     const fullName = `${this.deps.Env.rootDir}/${path}`;
     await pump(fileData, fs.createWriteStream(fullName));
 

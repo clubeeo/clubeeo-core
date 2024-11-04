@@ -7,8 +7,7 @@ import assert from 'assert'
 import {UserInClubRolesSync} from '../contexts/UserInClubContext/UserInClubRolesSync'
 import UserExt from '../models/UserExt'
 import {ExtServicesEnum} from '../lib/enums'
-import mercurius from 'mercurius'
-import ErrorWithProps = mercurius.ErrorWithProps
+import { ErrorWithProps } from 'mercurius';
 import {StatusCodes} from 'http-status-codes'
 import {ICtx} from './graphqlCommon'
 import {badgeMutations, clubBadgesResolvers} from './badgesGraphql'

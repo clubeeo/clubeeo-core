@@ -207,6 +207,7 @@ input ClubSocialLinksInput {
   facebook: String
   linkedin: String
   youtube: String
+  discord: String
   web: String
 }
 input ClubRoadmapInput {

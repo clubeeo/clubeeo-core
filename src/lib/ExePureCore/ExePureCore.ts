@@ -89,6 +89,7 @@ export namespace ExePureCore {
 
   export type TMemberCtx = {
     member: {id: string},
+    user: {id: string},
     hub: {id: string},
   }
 

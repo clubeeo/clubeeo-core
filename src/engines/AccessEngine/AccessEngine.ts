@@ -28,7 +28,8 @@ export class AccessEngine extends EngineBase {
    * @deprecated use .service
    */
   async memberHasRole(member: Member, club: Club| IEntityId, roleSlug: string) {
-    return this.service.memberHasRole(member, club, roleSlug);
+    const user = await this.app.m.findOneBy(User, {id: member.userId});
+    return this.service.memberHasRole(member, user, club, roleSlug);
   }
 
   /**

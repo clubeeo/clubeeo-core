@@ -4,7 +4,7 @@ import routes from './routes';
 // import {graphqlResolvers} from './graphql/graphqlResolvers';
 // import {graphqlSchema} from './graphql/graphqlSchema';
 // import mercuriusAuth from 'mercurius-auth';
-import {graphqlLoaders} from './graphql/graphqlLoaders';
+// import {graphqlLoaders} from './graphql/graphqlLoaders';
 import path from 'path';
 import webhooksApi from './clubApps/WebhookEndpointApp/api/webhooksApi';
 
